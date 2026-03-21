@@ -175,6 +175,54 @@ git diff --numstat bwcj_prod -- "**Mapper.xml"
 | fund-catering-task | 33 | Java 使用 lsym，配置用 bwcj |
 | fund-catering-front | 33 | Java 使用 lsym，配置用 bwcj |
 | starter-modules | 5 | 全部使用 lsym（含依赖） |
+| fund-catering-report | 94 | 已审查，中风险文件无问题 |
+| fund-catering-web | 73 | 已审查，已恢复 bwcj 新代码 |
+| common-core | 26 | 已审查，中风险文件无问题 |
+
+### ✅ 审查完成 (2026-03-21)
+
+#### 发现的问题及修复
+
+**问题1：bwcj 新代码被删除（8个文件）**
+
+| 文件 | bwcj 提交内容 | 处理结果 |
+|------|--------------|----------|
+| ZtBatchDateController.java | 6.3接口、手动触发定时任务、busOrdNo | ✅ 已恢复 |
+| TzMonthBatchDateController.java | 6.7/6.8卡号解密、公司间调账 | ✅ 已恢复 |
+| ZtDataController.java | busOrdNo、分账冻结/扣款 | ✅ 已恢复 |
+| TestBatchNotifyMainController.java | 6.7/6.8接口 | ✅ 已恢复 |
+| BaseBillDetailResponse.java | 新增 busOrdNo 字段 | ✅ 已恢复 |
+| LedgerFreezeDebitResponse.java | 新增 busOrdNo 字段 | ✅ 已恢复 |
+| SettleInAccResponse.java | 6.1/6.3接口 | ✅ 已恢复 |
+| StoreJobService.java | 定时任务 | ✅ 已恢复 |
+
+**依赖文件恢复（2个）**：
+- PageResultResp.java
+- PageResultDetailsResp.java
+
+**提交记录**: `a54b87419 fix: 恢复 bwcj 12月15日后新增的文件 (10个)`
+
+#### 中风险文件检查结果
+
+| 文件 | bwcj 12月15日后提交 | 检查结果 |
+|------|-------------------|----------|
+| DefaultResult.java | Revert JSON序列化配置 | 🟢 删除的方法无引用，安全 |
+| PagedListResultDto.java | Revert JSON序列化配置 | 🟢 构造函数调整，安全 |
+| ApiConstants.java | 人工补单开发 | 🟢 新增常量，安全 |
+| CommonConstants.java | 履历相关修改 | 🟢 格式调整+新增，安全 |
+| BaseAccountServiceApi.java | fix: 修改sql | 🟢 删除方法无调用，安全 |
+| BaseAccountFacadeController.java | fix: 修改sql | 🟢 删除方法无调用，安全 |
+
+#### 删除文件全局引用检查结果
+
+**无引用，安全删除**：
+- SettlementMethodEnum
+- SettlementModeEnum
+- WsBankServiceApi
+- WsChannelConfig 等 WS 相关类 (6个)
+- StoreJobService
+- StoreController
+- PageResultResp、PageResultDetailsResp（后因依赖恢复）
 
 ### ⏳ 待处理模块
 | 模块 | 文件数 | bwcj 3月提交 | 注意事项 |
@@ -183,30 +231,45 @@ git diff --numstat bwcj_prod -- "**Mapper.xml"
 | fund-catering-web | 73 | ✅ 有（3月4-5日） | 需仔细核对3月提交 |
 | common-core | 26 | ✅ 有（3月2日） | 需仔细核对3月提交 |
 
-### ⚠️ 待处理模块注意事项
-
-#### fund-catering-report (94个文件)
-- bwcj 3月有大量提交（3月11-18日）
-- 高风险文件: ReportUnidentifiedRemittanceTQueryRes.java (删除160行)
-- 已有 Mapper XML: 12个，需检查字段差异
-- **建议**: 先检查3月提交的具体文件，逐个核对
-
-#### fund-catering-web (73个文件)
-- bwcj 3月有提交（3月4-5日）
-- **建议**: 先检查3月提交的具体文件
-
-#### common-core (26个文件)
-- bwcj 3月2日有提交（JSON类型信息序列化配置相关）
-- **建议**: 检查 DefaultResult.java、PagedListResultDto.java
-
 ### 📋 核对技巧
 ```bash
 # 1. 查看模块完整提交历史（使用 --follow 追踪文件）
 git log bwcj_prod --format="%h %ad %an %s" --date=short --follow -- "模块路径"
 
-# 2. 查看3月以来的提交
-git log bwcj_prod --format="%h %ad %s" --date=short --after="2026-02-28" -- "模块路径"
+# 2. 查看12月15日以来的提交
+git log bwcj_prod --format="%h %ad %s" --date=short --after="2025-12-15" -- "模块路径"
 
-# 3. 检查具体文件是否在3月有变更
-git log bwcj_prod --oneline --after="2026-02-28" -- "文件路径"
+# 3. 检查具体文件是否在12月15日后有变更
+git log bwcj_prod --oneline --after="2025-12-15" -- "文件路径"
+
+# 4. 找出重叠文件（bwcj 12月15日后修改 && 当前合并也修改）
+comm -12 <(git log bwcj_prod --format="" --name-only --after="2025-12-15" -- "模块路径" | sort -u) <(git diff bwcj_prod HEAD --name-only | sort -u)
+
+# 5. 全局引用检查
+grep -rn "类名" --include="*.java" /Users/limeng/workspaces/ | grep -v "target/" | grep -v ".git/"
 ```
+
+## 审查要点总结
+
+### 必须执行的检查
+
+1. **重叠文件检查**: bwcj 12月15日后修改的文件，需要对比历史提交
+2. **全局引用检查**: 删除类/方法前，必须在所有项目目录搜索引用
+3. **依赖检查**: 恢复文件时，检查是否有依赖文件也需要恢复
+
+### 检查范围
+
+| 项目路径 | 说明 |
+|---------|------|
+| /Users/limeng/workspaces/IdeaProjects_mdl_dep/ | 当前工作目录 |
+| /Users/limeng/workspaces/IdeaProjects_bwcj_uat/ | bwcj UAT 环境 |
+| /Users/limeng/workspaces/IdeaProjects_lsym_dep/ | lsym 项目 |
+| /Users/limeng/workspaces/IdeaProjects_lsym_uat/ | lsym UAT 环境 |
+
+### 常见问题处理
+
+| 问题 | 解决方案 |
+|------|---------|
+| bwcj 新代码被删除 | 从 bwcj_prod 恢复：`git checkout bwcj_prod -- "文件路径"` |
+| 删除类有引用 | 检查引用是否在合并范围内，如在范围内则恢复 |
+| 依赖文件缺失 | 恢复文件时检查 import，确保依赖文件也存在 |
