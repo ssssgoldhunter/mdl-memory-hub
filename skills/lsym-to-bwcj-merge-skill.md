@@ -229,7 +229,85 @@ git diff --numstat bwcj_prod -- "**Mapper.xml"
 |------|--------|--------------|----------|
 | fund-catering-report | 94 | ✅ 有（3月11-18日） | 需仔细核对3月提交 |
 | fund-catering-web | 73 | ✅ 有（3月4-5日） | 需仔细核对3月提交 |
-| common-core | 26 | ✅ 有（3月2日） | 需仔细核对3月提交 |
+
+### ✅ common-core 模块已完成 (2026-03-21)
+
+#### 修复内容
+| 文件 | 问题 | 处理结果 |
+|------|------|----------|
+| ContractConstants.java | 合并时常量值错误 | ✅ 使用 lsym 版本覆盖 |
+| CreateNoUtil.java | 缺少 createContractNo 方法 | ✅ 添加方法 |
+| Constant.java | 缺少 VOID_PAYMENT 相关常量 | ✅ 添加常量 |
+| QueryOrderResponse.java | 缺少 realStatus 字段 | ✅ 添加字段 |
+| ExcelUtil.java | 缺少必填字段和正则验证逻辑 | ✅ 添加验证逻辑 |
+
+#### ContractConstants.java 冲突分析
+- **CONTRACT_TYPE 冲突**:
+  - lsym: TYPE_0="0"(常规), TYPE_1="1"(不放款)
+  - bwcj 原: TYPE_1="1"(常规合同), TYPE_2="2"(不放款合同)
+  - 代码逻辑使用 TYPE_1 表示"不放款"，故 bwcj 版本错误
+- **CONTRACT_STATUS_F 冲突**:
+  - lsym: "F" = 放款失败
+  - bwcj 原: "F" = 失效
+  - 代码逻辑用于"放款失败"场景，故 bwcj 版本错误
+- **历史分析**: bwcj_prod 原始版本没有这些常量，是合并时错误添加
+
+### ✅ fund-catering-base 模块已完成 (2026-03-21)
+
+#### 修复内容
+| 文件 | 问题 | 处理结果 |
+|------|------|----------|
+| AccountServiceImpl.java | 缺少银行返回报错信息优化 | ✅ 使用 lsym 版本覆盖 |
+| BasContractInfoReq.java | - | 🟢 bwcj 已有 updateBy/updateTime 字段 |
+| GdWarningMsgReq.java | - | 🟢 bwcj 已有 msgType 字段 |
+| GdWarningMsg.java | - | 🟢 bwcj 已有 msgType 字段 |
+
+#### AccountServiceImpl.java 更新说明
+- lsym 在 2026-03-18 更新：账户类对接银行返回报错信息优化
+- 将银行返回的错误信息（code, message, frontCode, frontMessage, frontTransSsn）透传给前端
+
+### ✅ fund-catering-consume 模块已完成 (2026-03-21)
+
+#### 修复内容
+| 文件 | 问题 | 处理结果 |
+|------|------|----------|
+| CreditRepaymentDetailApi.java | 缺少下载接口 | ✅ 添加 downLoadRepaymentList 接口 |
+| CreditRepaymentDetailController.java | 缺少下载实现 | ✅ 添加方法实现 |
+| CreditRepaymentDetailService.java | 缺少方法声明 | ✅ 添加方法声明 |
+| CreditRepaymentDetailServiceImpl.java | 缺少方法实现 | ✅ 添加方法实现 |
+| CreditRepaymentDetailMapper.java | 缺少 Mapper 方法 | ✅ 添加方法 |
+| CreditRepaymentDetailMapper.xml | 缺少 SQL | ✅ 添加 SQL |
+| CreditBillDetailController.java | 缺少失效原因设置 | ✅ 添加逻辑 |
+| RefundRechargeTransAfter.java | import 差异 | 🟢 仅 import 差异，忽略 |
+| ConsumeTransFrozen.java | import 差异 | 🟢 仅 import 差异，忽略 |
+| TransTransferTiBatchBusinessServiceImpl.java | import 差异 | 🟢 仅 import 差异，忽略 |
+
+#### 授信1.21需求
+- lsym 在 2026-03-20 更新：授信1.21需求
+- 新增核销管理下载功能
+
+### ⏳ 待处理模块 (2026-03-22 继续处理)
+
+| 模块 | 差异文件数 | 状态 | 说明 |
+|------|------------|------|------|
+| fund-catering-web | 74 | ⏳ 需详细审查 | lsym 新增商户号转换、前端错误码处理等逻辑 |
+| fund-catering-report | - | ⏳ 待检查 | - |
+| starter-redis | - | ⏳ 待检查 | - |
+| fund-catering-front | 11 | 🟢 已检查 | 仅 import 差异，已忽略 |
+| fund-catering-task | 5 | 🟢 已检查 | 仅 import 差异，已忽略 |
+
+### fund-catering-web 模块差异分析
+
+**lsym 新增功能**：
+1. 商户号转换逻辑
+2. 前端错误码处理
+3. SignAuthInterceptor 完整代码（bwcj 注释了大量代码）
+
+**bwcj 独有文件**（已确认保留）：
+- TzMonthBatchDateController.java
+- ZtBatchDateController.java
+- TestBatchNotifyMainController.java
+- ScStoreSyncReq.java
 
 ### 📋 核对技巧
 ```bash
