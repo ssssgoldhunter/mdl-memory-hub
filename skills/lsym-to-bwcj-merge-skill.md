@@ -286,28 +286,57 @@ git diff --numstat bwcj_prod -- "**Mapper.xml"
 - lsym 在 2026-03-20 更新：授信1.21需求
 - 新增核销管理下载功能
 
-### ⏳ 待处理模块 (2026-03-22 继续处理)
+### ✅ fund-catering-web 模块已完成 (2026-03-22)
 
-| 模块 | 差异文件数 | 状态 | 说明 |
-|------|------------|------|------|
-| fund-catering-web | 74 | ⏳ 需详细审查 | lsym 新增商户号转换、前端错误码处理等逻辑 |
-| fund-catering-report | - | ⏳ 待检查 | - |
-| starter-redis | - | ⏳ 待检查 | - |
-| fund-catering-front | 11 | 🟢 已检查 | 仅 import 差异，已忽略 |
-| fund-catering-task | 5 | 🟢 已检查 | 仅 import 差异，已忽略 |
+#### 提交信息
+- **Commit**: 849dcf748
+- **文件数**: 82个
 
-### fund-catering-web 模块差异分析
+#### 合并内容
+- controller: 商户号转换逻辑、前端错误码处理
+- config: SignAuthInterceptor完整代码、BaseCheckInterceptor动态商户ID
+- request/response: 82个文件从lsym复制
 
-**lsym 新增功能**：
-1. 商户号转换逻辑
-2. 前端错误码处理
-3. SignAuthInterceptor 完整代码（bwcj 注释了大量代码）
+#### 特殊处理
+- 保留bwcj独有文件: TzMonthBatchDateController、ZtBatchDateController、TestBatchNotifyMainController、ScStoreSyncReq
+- WebConstant.java: 添加缺失的C_REMARK常量
 
-**bwcj 独有文件**（已确认保留）：
-- TzMonthBatchDateController.java
-- ZtBatchDateController.java
-- TestBatchNotifyMainController.java
-- ScStoreSyncReq.java
+### ✅ fund-catering-report 模块已完成 (之前合并)
+- 已在之前的合并提交中处理（commit: 6936297a1, cffd78865, 1b6b1e69e）
+- 中风险文件已检查，无问题
+
+### ✅ starter-redis 模块已完成 (2026-03-22)
+- 无差异，无需处理
+
+---
+
+## 任务完成总结 (2026-03-22)
+
+### 所有模块合并状态
+
+| 模块 | 文件数 | 状态 | 最终提交 |
+|------|--------|------|----------|
+| common-core | 26 | ✅ 已完成 | a32dccef7 |
+| fund-catering-base | 67+9 | ✅ 已完成 | 46adc3266 |
+| fund-catering-consume | 152+13 | ✅ 已完成 | 4563903c3 |
+| fund-catering-task | 33 | ✅ 已完成 | 之前合并 |
+| fund-catering-front | 33 | ✅ 已完成 | 之前合并 |
+| starter-modules | 5 | ✅ 已完成 | 之前合并 |
+| fund-catering-report | 118 | ✅ 已完成 | 之前合并 |
+| fund-catering-web | 82 | ✅ 已完成 | 849dcf748 |
+| starter-redis | 0 | ✅ 无差异 | - |
+
+### 合并分支信息
+- **分支名**: `bwcj_lsym_commit_20260320`
+- **基线分支**: `bwcj_prod`
+- **基线日期**: 2025-12-15
+
+### 关键修复记录
+1. bwcj 12月15日后新增代码被删除 → 已恢复 (commit: a54b87419)
+2. ContractConstants.java 常量值错误 → 已修复 (commit: a32dccef7)
+3. CreditRepaymentDetail 下载功能缺失 → 已添加 (commit: 4563903c3)
+4. AccountServiceImpl 银行返回报错信息优化 → 已更新 (commit: 46adc3266)
+5. WebConstant.java C_REMARK常量缺失 → 已添加 (commit: 849dcf748)
 
 ### 📋 核对技巧
 ```bash
