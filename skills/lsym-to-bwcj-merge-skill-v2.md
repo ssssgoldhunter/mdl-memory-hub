@@ -163,8 +163,12 @@ mvn compile -q
 
 #### fund-catering-front 模块
 - 状态：✅ 已完成
-- 提交：无变更
-- 说明：lsym 和 bwcj 版本一致，无需合并
+- 提交：64a830cae
+- 变更文件：34个
+- 主要变更：API层、路由、处理器更新
+- 保留文件（WS相关）：FrontTransWSFacadeApi.java, FrontTransWsFacadeController.java, WsChannelConfig.java, BatchCreateReq.java, ws目录
+- lsym 12/15后提交：多个
+- bwcj 12/15后提交：无
 
 ---
 
@@ -173,11 +177,15 @@ mvn compile -q
 **合并完成日期**: 2026-03-22
 
 **合并提交记录**:
-1. dc0a2c963 - starter-redis 模块
-2. 43e335856 - common-core 模块
-3. 2ce8ce9b4 - fund-catering-base 模块
-4. b2dc7e42f - fund-catering-consume 模块
-5. 9a0bbbc45 - fund-catering-task/web/report 模块
+| 提交ID | 模块 | 文件数 | 新增行 | 删除行 |
+|--------|------|--------|--------|--------|
+| dc0a2c963 | starter-redis | 5 | 234 | 39 |
+| 43e335856 | common-core | 39 | 1362 | 278 |
+| 2ce8ce9b4 | fund-catering-base | 119 | 7587 | 1492 |
+| b2dc7e42f | fund-catering-consume | 559 | 20673 | 1903 |
+| 9a0bbbc45 | fund-catering-task/web/report | 807 | 16360 | 5548 |
+| 64a830cae | fund-catering-front | 34 | 278 | 40 |
+| **总计** | **全部模块** | **1563** | **46494** | **9300** |
 
 **保留的 bwcj 独有代码**:
 1. ApiConstants.RESULT_DEALING - databatch 人工补单使用
@@ -185,6 +193,11 @@ mvn compile -q
 3. DateUtils.parseTimestamp/formatTimestamp/addDays - databatch 使用
 4. ValidateMsgConstant 门店验证消息 - databatch 使用
 5. WsBankServiceApi.java - databatch 网商银行相关
+6. FrontTransWSFacadeApi.java - databatch 网商银行相关
+7. FrontTransWsFacadeController.java - databatch 网商银行相关
+8. WsChannelConfig.java - databatch 网商银行相关
+9. BatchCreateReq.java - databatch 批量创建相关
+10. ws 目录下的服务实现 - databatch 网商银行相关
 
 **注意事项**:
 1. 未进行 mvn compile 验证（网络原因无法连接私有仓库）
