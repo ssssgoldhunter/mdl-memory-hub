@@ -312,9 +312,9 @@ git diff --numstat bwcj_prod -- "**Mapper.xml"
 
 | 模块 | 文件数 | 状态 | 最终提交 |
 |------|--------|------|----------|
-| common-core | 26 | ✅ 已完成 | a32dccef7 |
-| fund-catering-base | 67+9 | ✅ 已完成 | 46adc3266 |
-| fund-catering-consume | 152+13 | ✅ 已完成 | 4563903c3 |
+| common-core | 26 | ✅ 已完成 | 312c44255 |
+| fund-catering-base | 67+9 | ✅ 已完成 | 312c44255 |
+| fund-catering-consume | 152+13 | ✅ 已完成 | 312c44255 |
 | fund-catering-task | 33 | ✅ 已完成 | 之前合并 |
 | fund-catering-front | 33 | ✅ 已完成 | 之前合并 |
 | starter-modules | 5 | ✅ 已完成 | 之前合并 |
@@ -329,50 +329,39 @@ git diff --numstat bwcj_prod -- "**Mapper.xml"
 
 ### 关键修复记录
 1. bwcj 12月15日后新增代码被删除 → 已恢复 (commit: a54b87419)
-2. ~~ContractConstants.java 常量值错误~~ → **错误：lsym 不存在这些常量，已清理** (commit: cbc4fe283)
-3. ~~CreditRepaymentDetail 下载功能缺失~~ → **错误：lsym 不存在此功能，已清理** (commit: f738c06bf)
-4. AccountServiceImpl 银行返回报错信息优化 → 已更新 (commit: 46adc3266)
+2. ContractConstants.java 常量缺失 → ✅ 已从 lsym_prod 恢复 (commit: 312c44255)
+3. CreditRepaymentDetail 下载功能缺失 → ✅ 已从 lsym_prod 恢复 (commit: 312c44255)
+4. AccountServiceImpl 银行返回报错信息优化 → ✅ 已从 lsym_prod 恢复 (commit: 312c44255)
 5. WebConstant.java C_REMARK常量缺失 → 已添加 (commit: 849dcf748)
-6. **虚构代码清理** → 已清理，恢复 lsym 原始版本 (commit: f738c06bf, 70e3319bb, cbc4fe283)
+6. DefaultResult.java front* 字段 → ✅ 已确认存在 (commit: 312c44255)
 
-### ❌ 虚构代码问题 (2026-03-22 发现)
+### ⚠️ 错误使用 lsym 目录问题 (2026-03-22 发现并修复)
 
-**问题**：之前模型虚构了大量代码，声称"从 lsym 同步"但实际 lsym 不存在这些代码。
+**问题**：之前使用错误的 lsym 目录 `/Users/limeng/workspaces/IdeaProjects_lsym_dep/slhy` 进行比较，该目录是旧版本。
 
-#### 虚构代码清单（已清理）
+**正确的 lsym_prod 路径**：`/Users/limeng/workspaces/IdeaProjects_lsym_uat/slhy`
 
-**提交 4563903c3 - "授信1.21需求"**：
-| 文件/方法 | 描述 | 处理 |
-|-----------|------|------|
-| CreditRepaymentDetailApi.downLoadRepaymentList | 下载接口 | ❌ lsym 不存在，已删除 |
-| CreditRepaymentDetailController.downLoadRepaymentList | 下载实现 | ❌ lsym 不存在，已删除 |
-| CreditRepaymentDetailService.downLoadRepaymentList | 服务方法 | ❌ lsym 不存在，已删除 |
-| CreditRepaymentDetailServiceImpl.downLoadRepaymentList | 服务实现 | ❌ lsym 不存在，已删除 |
-| CreditRepaymentDetailMapper.downLoadRepaymentList | Mapper方法 | ❌ lsym 不存在，已删除 |
-| CreditRepaymentDetailMapper.xml downLoadRepaymentList | SQL查询 | ❌ lsym 不存在，已删除 |
-| CreditRepaymentDetailQueryExportRes.java | 响应类 | ❌ lsym 不存在，已删除 |
-| CreditBillDetailController.setInvalidReason | 失效原因设置 | ❌ lsym 不存在，已删除 |
+**导致的问题**：
+- 误认为 lsym 不存在 front* 字段、Contract_Type 类等代码
+- 错误地删除了这些真实存在的代码，声称是"虚构代码"
+- 提交 f738c06bf, 70e3319bb, cbc4fe283, a4a2cb376, 4cf2227b5 都是错误的删除
 
-**提交 a32dccef7 - "common-core 模块合并修复"**：
-| 文件 | 虚构内容 | 处理 |
-|------|---------|------|
-| ContractConstants.java | Contract_Type 类 (CONTRACT_TYPE_0, CONTRACT_TYPE_1) | ❌ lsym 不存在，已删除 |
-| ContractConstants.java | Bill_Overdue_Reason 类 | ❌ lsym 不存在，已删除 |
-| BasContractInfoServiceImpl.java | 233行"不放款合同处理"逻辑 | ❌ lsym 不存在，已删除 |
-| CreateNoUtil.java | createContractNo(Long deptId) 方法 | ❌ lsym 不存在，已删除 |
-| Constant.java | VOID_PAYMENT 相关常量 | ❌ lsym 不存在，已删除 |
-| QueryOrderResponse.java | realStatus 字段 | ❌ lsym 不存在，已删除 |
-| ExcelUtil.java | 必填字段验证和正则验证逻辑 | ❌ lsym 不存在，已删除 |
+**已修复 (commit: 312c44255)**：
+从正确的 lsym_prod 路径恢复了以下代码：
 
-**提交 cffd78865 - "common-core模块合并"**：
-| 文件 | 虚构内容 | 处理 |
-|------|---------|------|
-| DefaultResult.java | frontCode, frontMessage, frontTransSsn 字段 | ❌ lsym 不存在，已删除 |
+| 文件 | lsym_prod 提交历史 | 内容 |
+|------|-------------------|------|
+| DefaultResult.java | 2026-01-04 "中信银行错误透传" | frontCode, frontMessage, frontTransSsn 字段 |
+| ContractConstants.java | 2026-03-20 "授信1.21需求" | Contract_Type, Bill_Overdue_Reason 类 |
+| AccountServiceImpl.java | 2026-03-18 "账户类对接银行返回报错信息优化" | 17处 setFrontCode 调用 |
+| CreditRepaymentDetailMapper.xml | 2026-02-05 "授信-核销管理-下载" | downLoadRepaymentList 方法 |
+| CreditRepaymentDetailQueryExportRes.java | 2026-02-05 | 新增导出响应类 |
+| CreditRepaymentDetailService/Api/Controller | 2026-02-05 | 下载功能链 |
 
 **教训**：
-1. **必须验证源代码存在**：声称"从 lsym 同步"前，必须在 lsym 项目中实际验证代码存在
-2. **不要虚构功能**：不能根据假设添加代码
-3. **提交信息要真实**：提交信息描述的内容必须与实际代码变更一致
+1. **必须使用正确的源项目路径**：lsym_prod 在 `/Users/limeng/workspaces/IdeaProjects_lsym_uat/slhy`
+2. **验证代码存在**：在删除前，必须在正确的源项目中验证代码是否真实存在
+3. **不要假设虚构**：看到不认识的代码时，先检查是否是源项目的新功能
 
 ### 📋 核对技巧
 ```bash
@@ -404,10 +393,10 @@ grep -rn "类名" --include="*.java" /Users/limeng/workspaces/ | grep -v "target
 
 | 项目路径 | 说明 |
 |---------|------|
-| /Users/limeng/workspaces/IdeaProjects_mdl_dep/ | 当前工作目录 |
+| /Users/limeng/workspaces/IdeaProjects_mdl_dep/bwcj | 当前工作目录 |
 | /Users/limeng/workspaces/IdeaProjects_bwcj_uat/ | bwcj UAT 环境 |
-| /Users/limeng/workspaces/IdeaProjects_lsym_dep/ | lsym 项目 |
-| /Users/limeng/workspaces/IdeaProjects_lsym_uat/ | lsym UAT 环境 |
+| **/Users/limeng/workspaces/IdeaProjects_lsym_uat/slhy** | **lsym_prod 源项目（正确路径）** |
+| /Users/limeng/workspaces/IdeaProjects_lsym_dep/slhy | lsym 开发环境（可能过时） |
 
 ### 常见问题处理
 
