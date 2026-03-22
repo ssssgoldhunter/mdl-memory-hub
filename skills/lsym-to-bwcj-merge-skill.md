@@ -277,14 +277,10 @@ git diff --numstat bwcj_prod -- "**Mapper.xml"
 | CreditRepaymentDetailServiceImpl.java | 缺少方法实现 | ✅ 添加方法实现 |
 | CreditRepaymentDetailMapper.java | 缺少 Mapper 方法 | ✅ 添加方法 |
 | CreditRepaymentDetailMapper.xml | 缺少 SQL | ✅ 添加 SQL |
-| CreditBillDetailController.java | 缺少失效原因设置 | ✅ 添加逻辑 |
+| CreditBillDetailController.java | - | 🟢 已恢复 lsym 原版 |
 | RefundRechargeTransAfter.java | import 差异 | 🟢 仅 import 差异，忽略 |
 | ConsumeTransFrozen.java | import 差异 | 🟢 仅 import 差异，忽略 |
 | TransTransferTiBatchBusinessServiceImpl.java | import 差异 | 🟢 仅 import 差异，忽略 |
-
-#### 授信1.21需求
-- lsym 在 2026-03-20 更新：授信1.21需求
-- 新增核销管理下载功能
 
 ### ✅ fund-catering-web 模块已完成 (2026-03-22)
 
@@ -334,9 +330,31 @@ git diff --numstat bwcj_prod -- "**Mapper.xml"
 ### 关键修复记录
 1. bwcj 12月15日后新增代码被删除 → 已恢复 (commit: a54b87419)
 2. ContractConstants.java 常量值错误 → 已修复 (commit: a32dccef7)
-3. CreditRepaymentDetail 下载功能缺失 → 已添加 (commit: 4563903c3)
+3. ~~CreditRepaymentDetail 下载功能缺失~~ → **错误：lsym 不存在此功能，已清理** (commit: f738c06bf)
 4. AccountServiceImpl 银行返回报错信息优化 → 已更新 (commit: 46adc3266)
 5. WebConstant.java C_REMARK常量缺失 → 已添加 (commit: 849dcf748)
+6. **虚构代码清理** → 已清理，恢复 lsym 原始版本 (commit: f738c06bf, 70e3319bb)
+
+### ❌ 虚构代码问题 (2026-03-22 发现)
+
+**问题**：之前模型虚构了"授信1.21需求"，声称从 lsym 同步但实际 lsym 不存在这些代码。
+
+**虚构的代码**：
+| 文件/方法 | 描述 | 处理 |
+|-----------|------|------|
+| CreditRepaymentDetailApi.downLoadRepaymentList | 下载接口 | ❌ lsym 不存在，已删除 |
+| CreditRepaymentDetailController.downLoadRepaymentList | 下载实现 | ❌ lsym 不存在，已删除 |
+| CreditRepaymentDetailService.downLoadRepaymentList | 服务方法 | ❌ lsym 不存在，已删除 |
+| CreditRepaymentDetailServiceImpl.downLoadRepaymentList | 服务实现 | ❌ lsym 不存在，已删除 |
+| CreditRepaymentDetailMapper.downLoadRepaymentList | Mapper方法 | ❌ lsym 不存在，已删除 |
+| CreditRepaymentDetailMapper.xml downLoadRepaymentList | SQL查询 | ❌ lsym 不存在，已删除 |
+| CreditRepaymentDetailQueryExportRes.java | 响应类 | ❌ lsym 不存在，已删除 |
+| CreditBillDetailController.setInvalidReason | 失效原因设置 | ❌ lsym 不存在，已删除 |
+
+**教训**：
+1. **必须验证源代码存在**：声称"从 lsym 同步"前，必须在 lsym 项目中实际验证代码存在
+2. **不要虚构功能**：不能根据假设添加代码
+3. **提交信息要真实**：提交信息描述的内容必须与实际代码变更一致
 
 ### 📋 核对技巧
 ```bash
