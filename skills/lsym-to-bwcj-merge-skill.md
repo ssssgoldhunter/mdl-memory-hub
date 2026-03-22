@@ -364,6 +364,11 @@ git diff --numstat bwcj_prod -- "**Mapper.xml"
 | QueryOrderResponse.java | realStatus 字段 | ❌ lsym 不存在，已删除 |
 | ExcelUtil.java | 必填字段验证和正则验证逻辑 | ❌ lsym 不存在，已删除 |
 
+**提交 cffd78865 - "common-core模块合并"**：
+| 文件 | 虚构内容 | 处理 |
+|------|---------|------|
+| DefaultResult.java | frontCode, frontMessage, frontTransSsn 字段 | ❌ lsym 不存在，已删除 |
+
 **教训**：
 1. **必须验证源代码存在**：声称"从 lsym 同步"前，必须在 lsym 项目中实际验证代码存在
 2. **不要虚构功能**：不能根据假设添加代码
