@@ -329,17 +329,19 @@ git diff --numstat bwcj_prod -- "**Mapper.xml"
 
 ### 关键修复记录
 1. bwcj 12月15日后新增代码被删除 → 已恢复 (commit: a54b87419)
-2. ContractConstants.java 常量值错误 → 已修复 (commit: a32dccef7)
+2. ~~ContractConstants.java 常量值错误~~ → **错误：lsym 不存在这些常量，已清理** (commit: cbc4fe283)
 3. ~~CreditRepaymentDetail 下载功能缺失~~ → **错误：lsym 不存在此功能，已清理** (commit: f738c06bf)
 4. AccountServiceImpl 银行返回报错信息优化 → 已更新 (commit: 46adc3266)
 5. WebConstant.java C_REMARK常量缺失 → 已添加 (commit: 849dcf748)
-6. **虚构代码清理** → 已清理，恢复 lsym 原始版本 (commit: f738c06bf, 70e3319bb)
+6. **虚构代码清理** → 已清理，恢复 lsym 原始版本 (commit: f738c06bf, 70e3319bb, cbc4fe283)
 
 ### ❌ 虚构代码问题 (2026-03-22 发现)
 
-**问题**：之前模型虚构了"授信1.21需求"，声称从 lsym 同步但实际 lsym 不存在这些代码。
+**问题**：之前模型虚构了大量代码，声称"从 lsym 同步"但实际 lsym 不存在这些代码。
 
-**虚构的代码**：
+#### 虚构代码清单（已清理）
+
+**提交 4563903c3 - "授信1.21需求"**：
 | 文件/方法 | 描述 | 处理 |
 |-----------|------|------|
 | CreditRepaymentDetailApi.downLoadRepaymentList | 下载接口 | ❌ lsym 不存在，已删除 |
@@ -350,6 +352,17 @@ git diff --numstat bwcj_prod -- "**Mapper.xml"
 | CreditRepaymentDetailMapper.xml downLoadRepaymentList | SQL查询 | ❌ lsym 不存在，已删除 |
 | CreditRepaymentDetailQueryExportRes.java | 响应类 | ❌ lsym 不存在，已删除 |
 | CreditBillDetailController.setInvalidReason | 失效原因设置 | ❌ lsym 不存在，已删除 |
+
+**提交 a32dccef7 - "common-core 模块合并修复"**：
+| 文件 | 虚构内容 | 处理 |
+|------|---------|------|
+| ContractConstants.java | Contract_Type 类 (CONTRACT_TYPE_0, CONTRACT_TYPE_1) | ❌ lsym 不存在，已删除 |
+| ContractConstants.java | Bill_Overdue_Reason 类 | ❌ lsym 不存在，已删除 |
+| BasContractInfoServiceImpl.java | 233行"不放款合同处理"逻辑 | ❌ lsym 不存在，已删除 |
+| CreateNoUtil.java | createContractNo(Long deptId) 方法 | ❌ lsym 不存在，已删除 |
+| Constant.java | VOID_PAYMENT 相关常量 | ❌ lsym 不存在，已删除 |
+| QueryOrderResponse.java | realStatus 字段 | ❌ lsym 不存在，已删除 |
+| ExcelUtil.java | 必填字段验证和正则验证逻辑 | ❌ lsym 不存在，已删除 |
 
 **教训**：
 1. **必须验证源代码存在**：声称"从 lsym 同步"前，必须在 lsym 项目中实际验证代码存在
