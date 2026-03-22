@@ -54,3 +54,38 @@
 - bwcj_prod 基线日期：2025-12-15
 - 不要假设不存在的提交、不存在的代码
 - 宁愿有报错，也要仔细分析原因
+
+---
+
+## 合并执行记录
+
+### 2026-03-22 合并完成
+
+**合并结果**:
+- Commit: `86ef651c8`
+- 分支: `bwcj_lsym_merge_20260322_new`
+- 变更: 375 files changed, 3797 insertions(+), 5057 deletions(-)
+- MR链接: http://120.49.68.191:9999/bwcj/bwcj/-/merge_requests/new?merge_request%5Bsource_branch%5D=bwcj_lsym_merge_20260322_new
+
+**新增功能 (来自 lsym)**:
+1. CreditRepayment/CreditBill 相关功能和映射
+2. RemoteDeptService.selectAllDeptList() 方法
+3. ValidateMsgConstant 门店/Credit 相关常量
+4. BasContractInfoReq 扩展字段
+
+**修复的冲突**:
+1. WithDrawQueryReq 类名冲突 - 添加明确 import `com.chinaums.erp.slhy.catering.report.request.catering.WithDrawQueryReq`
+2. StringUtils 包路径冲突 - 8 个 router 文件改为 `com.chinaums.slhy.common.core.utils.StringUtils`
+3. CollectionUtils.isNotEmpty 兼容性 - 改为 `!CollectionUtils.isEmpty()`
+
+**恢复的依赖类 (为了兼容 databatch，从 bwcj_prod 恢复)**:
+- `GdWarningMsgReq.msgType` 字段
+- `PagedListResultDto` 构造函数
+- `CacheConstants.SYS_SETTLE_AGENCY_KEY`
+- `DateUtil.timeConverterStamp()` 方法
+
+**验证结果**:
+- ✅ `mvn compile` 通过
+- ✅ `mvn install -DskipTests` 通过
+- ✅ databatch 模块未修改
+- ✅ 已推送到远程仓库
