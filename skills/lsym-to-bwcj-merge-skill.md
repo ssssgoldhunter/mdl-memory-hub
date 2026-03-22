@@ -319,8 +319,10 @@ git diff --numstat bwcj_prod -- "**Mapper.xml"
 | fund-catering-front | 33 | ✅ 已完成 | 之前合并 |
 | starter-modules | 5 | ✅ 已完成 | 之前合并 |
 | fund-catering-report | 118 | ✅ 已完成 | 之前合并 |
-| fund-catering-web | 82 | ✅ 已完成 | 849dcf748 |
+| fund-catering-web | 82 | ✅ 已完成 | 9db315eff |
 | starter-redis | 0 | ✅ 无差异 | - |
+
+**最终统计**: 715 文件修改, +42,685 行, -7,302 行
 
 ### 合并分支信息
 - **分支名**: `bwcj_lsym_commit_20260320`
@@ -334,6 +336,7 @@ git diff --numstat bwcj_prod -- "**Mapper.xml"
 4. AccountServiceImpl 银行返回报错信息优化 → ✅ 已从 lsym_prod 恢复 (commit: 312c44255)
 5. WebConstant.java C_REMARK常量缺失 → 已添加 (commit: 849dcf748)
 6. DefaultResult.java front* 字段 → ✅ 已确认存在 (commit: 312c44255)
+7. BatchNotifyRequestRequest.java 被误删 → ✅ 已从 bwcj_prod 恢复 (commit: 9db315eff)
 
 ### ⚠️ 错误使用 lsym 目录问题 (2026-03-22 发现并修复)
 
