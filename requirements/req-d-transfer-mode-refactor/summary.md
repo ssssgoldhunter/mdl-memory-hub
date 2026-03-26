@@ -46,6 +46,33 @@
   - 写账户变动
   - 更新转账表状态、划付状态
 
+`trans_transfer_ti_batch_detail` 三状态字段建议流转：
+
+- 接口新增成功：
+  - `to_status = I`
+  - `ti_status = I`
+  - `status = I`
+- task 开始执行付款侧：
+  - `to_status = P`
+  - `ti_status = I`
+  - `status = P`
+- 付款成功，开始处理收款侧：
+  - `to_status = S`
+  - `ti_status = P`
+  - `status = P`
+- 收款成功：
+  - `to_status = S`
+  - `ti_status = S`
+  - `status = S`
+- 付款失败：
+  - `to_status = F`
+  - `ti_status = I`
+  - `status = F`
+- 付款成功但收款失败：
+  - `to_status = S`
+  - `ti_status = F`
+  - `status = F`
+
 ### 4. isFrozen=false
 
 - 按普通划付完成内部上下账
@@ -57,8 +84,14 @@
 - task 在划付成功后生成标准原冻结主记录 `F`
 - 这笔 `F` 直接进入 `需求 C` 的原冻结额度池模型
 - 同时执行：
-  - 增加账户冻结金额
   - 写 `trans_acct_frozen_change_detail_t`
+  - 增加账户冻结金额
+- 冻结落账采用拆分方式：
+  - 先写 `trans_frozen_t.F`
+  - 再写 `trans_acct_frozen_change_detail_t.F`
+  - 再更新账户 `frozenAmt`
+- `F.trans_no` 直接使用划付流水号
+- 后续 `需求 B/C` 的 `oldFrozenTransNo` 就是该划付流水号
 
 ### 6. 与 C/B 的复用关系
 
@@ -91,3 +124,7 @@
 - 当前可复用的底层能力包括：
   - `TransTransferTiBatchBusinessService` 中的 `retryPreOrder`、`processCredit`、`processDebit`、`updateDetailStatus`
   - `TransAccountController` 中已有的后管交易表补偿修复机制接口
+- 手动补偿入口当前建议的动作边界：
+  - 手动重试收款侧入金
+  - 手动补写冻结三件套
+  - 手动改状态为成功/失败，仅限后台修复场景

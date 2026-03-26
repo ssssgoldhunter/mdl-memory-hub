@@ -63,3 +63,32 @@
 
 - 后期增加一个面向 Web 的手动补偿入口
 - 该入口内部编排现有底层能力完成补偿处理
+
+### 已确认的状态机与冻结流水号规则
+
+- `trans_transfer_ti_batch_detail` 的三状态字段最终用于承载 `02` 模式不同阶段：
+  - `to_status`：付款侧出金状态
+  - `ti_status`：收款侧入金状态
+  - `status`：整笔汇总状态
+- 初始态：
+  - `I / I / I`
+- 开始付款：
+  - `P / I / P`
+- 付款成功、开始收款：
+  - `S / P / P`
+- 全成功：
+  - `S / S / S`
+- 付款失败：
+  - `F / I / F`
+- 付款成功、收款失败：
+  - `S / F / F`
+
+### 已确认的冻结落账规则
+
+- `isFrozen=true` 时，task 成功后必须落：
+  - `trans_frozen_t.F`
+  - `trans_acct_frozen_change_detail_t.F`
+  - 收款账户 `frozenAmt` 增加
+- 采用拆分写法，不走统一黑盒入口
+- `F.trans_no` 直接使用划付流水号
+- 后续 `B/C` 的 `oldFrozenTransNo` 就是该划付流水号
