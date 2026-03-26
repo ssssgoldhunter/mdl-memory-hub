@@ -39,3 +39,27 @@
 - 冻结 `100`
 - 后续 `B` 扣款 `20`
 - 再由 `C` 释放剩余 `80`
+
+### 已确认的失败处理方向
+
+- `trans_transfer_ti_batch_detail` 的三个状态字段可用于承载不同阶段：
+  - `to_status`：付款侧出金状态
+  - `ti_status`：收款侧入金状态
+  - `status`：整笔汇总状态
+- 当前先按“自动失败不整笔自动重试”处理
+- 特别是 `to_status = S`、`ti_status = F` 时，先记失败，后续通过补偿或人工处理
+
+### 已发现的现有可复用底层能力
+
+- `TransTransferTiBatchBusinessController / Service`
+  - `retryPreOrder`
+  - `processCredit`
+  - `processDebit`
+  - `updateDetailStatus`
+- `TransAccountController`
+  - 已有后管交易表补偿修复机制相关接口
+
+### 当前建议
+
+- 后期增加一个面向 Web 的手动补偿入口
+- 该入口内部编排现有底层能力完成补偿处理

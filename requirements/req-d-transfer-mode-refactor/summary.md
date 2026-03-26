@@ -81,3 +81,13 @@
 
 - `需求 D` 在 `isFrozen=true` 场景下，需要优先校验本次生成的冻结主流水号 `trans_no` 唯一
 - 一笔划付只能生成一笔对应的原冻结主记录
+
+### 9. 失败处理与后续补偿方向
+
+- 当前阶段先按“失败后不自动重试整笔”设计
+- 尤其在 `to_status = S`、`ti_status = F` 场景下，先记失败，后续走补偿或人工处理
+- 后期需要提供 Web 手动补偿入口
+- 手动补偿入口建议基于现有底层能力编排实现，而不是直接暴露底层修复接口
+- 当前可复用的底层能力包括：
+  - `TransTransferTiBatchBusinessService` 中的 `retryPreOrder`、`processCredit`、`processDebit`、`updateDetailStatus`
+  - `TransAccountController` 中已有的后管交易表补偿修复机制接口
