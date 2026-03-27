@@ -1,6 +1,6 @@
 # 当前代码状态
 
-更新时间：2026-03-27 14:25:00 CST
+更新时间：2026-03-27 19:05:00 CST
 
 ## 1. 已落地
 
@@ -16,6 +16,10 @@
 - 解冻只认 `orgTransNo`
 - 当前代码已支持部分解冻
 - 当前代码已支持给 `B useFrozen=true` 提供部分冻结扣款能力
+- `B/C` 已收口为同一套冻结池语义：
+  - 公共冻结池负责生成本次 `UF/D` 冻结流水
+  - 公共冻结池负责回写原始冻结 `F`
+  - 账户余额 / `frozenAmt` / 冻结金额变动明细仍在各自业务核心代码中
 
 ### B
 
@@ -25,15 +29,26 @@
 - 复用原 `TransSlot`
 - `useFrozen=true` 已走冻结额度管理能力
 - 扣款通知已接独立 deduction topic
+- `useFrozen=false`
+  - 继续走普通扣款语义
+- `useFrozen=true`
+  - 直接消费原冻结额度
+  - 不再额外走普通冻结 / 解冻动作
 
 ### D
 
 - `TRANSFER_MODE_SWITCH` 已接入
-- `01/02` 已按参数表开关分流
 - `02` 接口阶段走：
   - `pre`
   - `batchAddTransferTiData`
-- `02` task 侧负责真正划付完成
+- `02` task 侧已新增专用启动入口
+- `02` task 侧已新增：
+  - `processDebit02`
+  - `processCredit02`
+- `01` 原有：
+  - `processDebit`
+  - `processCredit`
+  保持不动
 - `useFrozen/isFrozen` 元数据已透传到 task
 - 成功后通知已在 task 成功点发送
 
@@ -72,3 +87,9 @@ mvn -Dmaven.repo.local=/tmp/codex-m2 -pl fund-catering-consume/fund-catering-con
 结果：
 
 - `BUILD SUCCESS`
+
+另：
+
+- `fund-catering-data-batch` 相关编译已启动
+- 当前正在补齐历史未下载依赖
+- 截至本次 memory 更新时，尚未出现新的代码编译错误结论
