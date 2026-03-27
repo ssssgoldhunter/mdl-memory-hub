@@ -17,6 +17,10 @@
 
 ## 当前需求清单
 
+- `docs/superpowers/mdl-supply-chain-abcd/`
+  - 当前 `mdl` 供应链 A/B/C/D/front 续聊主入口
+- `2026-03-27-abcd-front-implementation-baseline.md`
+  - 当前 A/B/C/D/front 实现基线，优先级高于旧确认稿
 - `req-a-withdraw-rule`
   - 提现接口及规则改造
 - `req-b-deduction-api`
