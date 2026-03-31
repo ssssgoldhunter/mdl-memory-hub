@@ -1,5 +1,10 @@
 # 需求 C 讨论日志
 
+更新时间：2026-03-31 10:20:00 CST
+
+> 说明：本文档保留讨论过程。  
+> 其中关于“当前代码仍限制一笔冻结只能完整解冻一次”的描述已经失效，当前实现请以 `summary.md` 和 `docs/superpowers/mdl-supply-chain-abcd/00-current-baseline.md` 为准。
+
 ## 2026-03-25 11:14:45 CST
 
 ### 讨论背景

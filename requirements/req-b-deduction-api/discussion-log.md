@@ -1,5 +1,10 @@
 # 需求 B 讨论日志
 
+更新时间：2026-03-31 10:18:00 CST
+
+> 说明：本文档保留讨论过程。  
+> 其中关于“复用消费异步上账”的描述已经失效，当前实现以 `summary.md` 和 `docs/superpowers/mdl-supply-chain-abcd/00-current-baseline.md` 为准。
+
 ## 2026-03-25 15:42:00 CST
 
 ### 讨论背景

@@ -1,6 +1,6 @@
 # 当前代码状态
 
-更新时间：2026-03-27 19:05:00 CST
+更新时间：2026-03-31 10:10:00 CST
 
 ## 1. 已落地
 
@@ -20,6 +20,8 @@
   - 公共冻结池负责生成本次 `UF/D` 冻结流水
   - 公共冻结池负责回写原始冻结 `F`
   - 账户余额 / `frozenAmt` / 冻结金额变动明细仍在各自业务核心代码中
+- 解冻前已补账户侧 `04.frozenAmt` 校验
+- 解冻链已复用现有 `accountCheck + slot.refreshCardSubAccount(...)`
 
 ### B
 
@@ -27,13 +29,23 @@
   - `/api/ums/catering/trans/scDeduction`
 - 核心 deduction 链独立
 - 复用原 `TransSlot`
-- `useFrozen=true` 已走冻结额度管理能力
-- 扣款通知已接独立 deduction topic
+- 主交易类型已改为 `D`
+- 账户变动明细类型已改为：
+  - 付款方 `DC`
+  - 收款方 `DR`
 - `useFrozen=false`
-  - 继续走普通扣款语义
+  - 已补前置余额校验
+  - 已补前置 `04` 冻结金额占用
+  - 已补账户变动前解冻
+  - 已改为同步更新收付款卡
 - `useFrozen=true`
   - 直接消费原冻结额度
   - 不再额外走普通冻结 / 解冻动作
+  - 已生成 `D` 并回写原始 `F`
+  - 已改为同步更新收付款卡
+- `B` service 入口已改为先锁付款卡、收款卡
+- `B` 两个 after 已改成同步账户变更，不再走收款异步上账
+- 扣款通知已接独立 deduction topic
 
 ### D
 
@@ -42,15 +54,14 @@
   - `pre`
   - `batchAddTransferTiData`
 - `02` task 侧已新增专用启动入口
-- `02` task 侧已新增：
-  - `processDebit02`
-  - `processCredit02`
-- `01` 原有：
-  - `processDebit`
-  - `processCredit`
-  保持不动
+- `02` task 侧改为直接扫描明细表
+- `02` task 外部只调单接口：
+  - `processDetail02`
+- `01` 原有上下账保持不动
 - `useFrozen/isFrozen` 元数据已透传到 task
+- `isFrozen=true` 已调整为“收款卡上账成功后立即写冻结”
 - 成功后通知已在 task 成功点发送
+- `D` 已明确收回划付域，不再继续改原转账链
 
 ### front
 
@@ -63,6 +74,10 @@
 - `A` 通过 `front` 查本地失败扣款再拦截提现
 - `DeductionTransSlot`
 - `D02 registerMode02Detail / batchRegisterMode02Detail`
+- `D02` 启动放在 `data-batch`
+- 原转账链带入 `D` 模式语义
+- `B` 使用消费主交易类型 `P`
+- `B` 使用消费账户明细类型 `PC/PR`
 
 ## 3. 当前仍是占位而非真实业务完成
 
@@ -81,7 +96,7 @@
 已执行：
 
 ```bash
-mvn -Dmaven.repo.local=/tmp/codex-m2 -pl fund-catering-consume/fund-catering-consume-service,fund-catering-web -am -DskipTests compile
+mvn -Dmaven.repo.local=/tmp/codex-m2 -pl fund-catering-consume/fund-catering-consume-service,common-core -am -DskipTests compile
 ```
 
 结果：
@@ -90,6 +105,5 @@ mvn -Dmaven.repo.local=/tmp/codex-m2 -pl fund-catering-consume/fund-catering-con
 
 另：
 
-- `fund-catering-data-batch` 相关编译已启动
-- 当前正在补齐历史未下载依赖
-- 截至本次 memory 更新时，尚未出现新的代码编译错误结论
+- 当前确认 `D02` 启动在 `fund-catering-task`
+- `fund-catering-data-batch` 不属于本次 `D02` 需求范围

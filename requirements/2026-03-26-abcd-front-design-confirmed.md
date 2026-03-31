@@ -2,6 +2,8 @@
 
 > 注：本文档保留为 2026-03-26 的设计确认历史记录。  
 > 由于后续多轮续聊、纠偏和代码落地，当前实现边界请以 `2026-03-27-abcd-front-implementation-baseline.md` 为准。
+>
+> 再补充：`2026-03-27-abcd-front-implementation-baseline.md` 里也已有部分内容继续过期；最终请优先以 `docs/superpowers/mdl-supply-chain-abcd/00-current-baseline.md` 为准。
 
 更新时间：2026-03-26 17:10:00 CST
 

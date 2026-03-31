@@ -4,6 +4,8 @@
 
 > 本文档后续不再作为主入口维护。  
 > 当前请优先查看 `docs/superpowers/mdl-supply-chain-abcd/00-current-baseline.md`。
+>
+> 额外说明：本文档中关于 `B=transType P`、`D02=两接口执行`、`D02=data-batch 启动` 等内容，均已在 2026-03-31 后续纠偏中失效。
 
 ## 1. 文档目的
 
