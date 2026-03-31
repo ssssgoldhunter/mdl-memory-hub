@@ -38,6 +38,13 @@
 - `requirements/req-c-frozen-refactor/`
 - `requirements/req-d-transfer-mode-refactor/`
 
+## 4.1 后续扩展设计稿
+
+- `docs/superpowers/specs/2026-03-31-e-batch-deduction-design.md`
+  - 作用：`E` 批量扣款需求设计稿
+  - 说明：`E` 是基于当前 `B` 扣款语义 + `D02` 执行模型的后续扩展
+  - 当前用于后续讨论和实现参考
+
 ## 5. 当前使用规则
 
 - 后续续聊时，先看本模块
