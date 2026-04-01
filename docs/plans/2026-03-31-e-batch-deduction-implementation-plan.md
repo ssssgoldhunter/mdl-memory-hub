@@ -4,7 +4,7 @@
 
 **Goal:** 新增 `E` 批量扣款能力，接口阶段先落明细和交易骨架，task 阶段逐条执行，单条执行入口内部按 `useFrozen` 分普通扣款与冻结扣款。
 
-**Architecture:** `E` 参考当前 `B` 的扣款业务语义和 `D02` 的执行模型，但代码链路与单笔 `B` 完全隔离。实现上拆成三块：预落地专用 liteflow、批量扣款明细服务与执行服务、task 扫描明细并调用单条执行入口。接口阶段只落 `trans_deduction_batch_detail + trans_consume_t + trans_consume_sub_t + trans_consume_sub_rec_t` 四类骨架，不做真实账务动作；真实账务在单条执行阶段完成。
+**Architecture:** `E` 参考当前 `B` 的扣款业务语义和 `D02` 的执行模型，但代码链路与单笔 `B` 完全隔离。实现上拆成三块：批量明细 service、预落地专用 liteflow、task 扫描明细并调用单条执行入口。接口阶段固定先由 business service 落 `trans_deduction_batch_detail`，再由 `chainDeductionPre` 的 node 落 `trans_consume_t + trans_consume_sub_t + trans_consume_sub_rec_t` 三类交易骨架，不做真实账务动作；真实账务在单条执行阶段完成。
 
 **Tech Stack:** Spring Boot, LiteFlow, MyBatis-Plus, OpenFeign, XXL-Job, Redis 分布式锁, Maven
 
@@ -198,7 +198,6 @@ Expected: FAIL，缺少 chain 或节点
 - 从 `DeductionTrans` 中抽取“建交易骨架”能力
 - 预落地 chain 只做：
   - 基础校验
-  - 明细落地
   - `trans_consume_t / trans_consume_sub_t / trans_consume_sub_rec_t` 预落地
 - 不做：
   - `frontTransConsumeFacadeApi.transConsume(...)`
@@ -248,7 +247,7 @@ Expected: FAIL
 关键实现：
 - 循环每条明细
 - 先落 `trans_deduction_batch_detail`
-- 再调用预落地 chain 落交易骨架
+- 再调用预落地 chain，由 node 落交易骨架
 - 明细和交易骨架都挂同一 `transNo`
 
 - [ ] **Step 4: 运行测试验证通过**

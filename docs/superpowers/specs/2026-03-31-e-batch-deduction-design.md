@@ -191,6 +191,29 @@ E = 参考 B 的扣款语义 + 参考 D02 的执行模型
 - 先落交易再落明细
 - 明细和交易乱序插入
 
+### 7.2.1 分层落点
+
+为避免再次把 `E` 的预落地做成“service 里直接堆全部落库”，这里明确固定分层：
+
+- `batchPreCreate` 的批量 business service：
+  - 负责批量入参校验
+  - 负责先落 `trans_deduction_batch_detail`
+- `chainDeductionPre` 的 node：
+  - 负责预落交易骨架
+  - 负责落：
+    - `trans_consume_t`
+    - `trans_consume_sub_t`
+    - `trans_consume_sub_rec_t`
+
+也就是：
+
+> 明细在 service 落，交易骨架在 node 落。
+
+这个口径与当前 `D02` 保持一致：
+
+- 明细由批量 service 落地
+- 预备交易数据由 liteflow 节点链完成
+
 ### 7.3 预落地要落的表
 
 阶段 1 需要落 4 类表：
@@ -543,8 +566,15 @@ E = 参考 B 的扣款语义 + 参考 D02 的执行模型
 该流程只负责：
 
 - 校验请求
-- 构建 `B` 交易骨架
-- 落明细和交易骨架
+- 构建 `E` 的交易骨架
+- 落交易骨架
+
+其中分层固定为：
+
+- 明细落地：
+  - 由 `batchPreCreate` 对应的 business service 完成
+- 交易骨架落地：
+  - 由 `chainDeductionPre` 的 node 完成
 
 该流程不负责：
 
@@ -556,7 +586,7 @@ E = 参考 B 的扣款语义 + 参考 D02 的执行模型
 也就是说：
 
 - 不能直接复用单笔 `B` 当前完整 `deductionTrans` 节点
-- 需要从中拆出“仅建骨架”的预落地能力
+- 需要为 `E` 单独实现“仅建骨架”的预落地节点
 
 ## 13. 异常与补偿
 
