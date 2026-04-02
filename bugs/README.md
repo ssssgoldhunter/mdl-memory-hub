@@ -63,11 +63,11 @@
 | D-8 | D | 重要 | D02 task processDetail 未捕获异常，一条失败中止扫描 | 已修复 | [D-008](./D-008-task-exception-aborts-scan.md) |
 | D-9 | D | 一般 | D02 task 明细在扫描和执行中各查一次 | 不修复 | [D-009](./D-009-detail-double-query.md) |
 | D-10 | D | 严重 | markDetailFailed 未设置 status 导致循环失败重试 | 已修复 | [D-010](./D-010-mark-detail-failed-no-status.md) |
-| D-11 | D | 高 | processDetail 未处理返回值，锁失败时不触发失败标记 | 待确认修复 | [D-011](./D-011-process-detail-no-result-check.md) |
-| E-23 | E | 高 | sendDeductionNotify 未检查 consume 是否为 null | 待确认修复 | [E-023](./E-023-notify-consume-null.md) |
-| B-6 | B | 高 | transDeduction 缺少 MAC 幂等校验 | 待确认修复 | [B-006](./B-006-deduction-no-mac-idempotent.md) |
-| BC-6 | B+C | 高 | FrozenTrans/UnFrozenTrans findFirst().get() 未处理空 | 待确认修复 | [BC-006](./BC-006-findfirst-no-empty-check.md) |
-| BC-7 | B+C | 高 | liteflowResponse.getCause() 为 null 时异常处理不当 | 待确认修复 | [BC-007](./BC-007-liteflow-cause-null.md) |
+| D-11 | D | 高 | processDetail 未处理返回值，锁失败时不触发失败标记 | 确认修复 | [D-011](./D-011-process-detail-no-result-check.md) |
+| E-23 | E | 高 | sendDeductionNotify 未检查 consume 是否为 null | 确认修复 | [E-023](./E-023-notify-consume-null.md) |
+| B-6 | B | 高 | transDeduction 缺少 MAC 幂等校验 | 确认修复 | [B-006](./B-006-deduction-no-mac-idempotent.md) |
+| BC-6 | B+C | 高 | FrozenTrans/UnFrozenTrans findFirst().get() 未处理空 | 确认修复 | [BC-006](./BC-006-findfirst-no-empty-check.md) |
+| BC-7 | B+C | 高 | liteflowResponse.getCause() 为 null 时异常处理不当 | 确认修复 | [BC-007](./BC-007-liteflow-cause-null.md) |
 | F-1 | Front | 高 | HttpDeductionMessageConsumeHandle properties NPE | 已修复 | [F-001](./F-001-deduction-properties-npe.md) |
 | F-2 | Front | 高 | HTTP 响应 body 空指针 | 已修复 | [F-002](./F-002-http-response-body-npe.md) |
 | F-3 | Front | 高 | MessageSendServiceImpl messageTypeTopic NPE | 已修复 | [F-003](./F-003-message-topic-npe.md) |
