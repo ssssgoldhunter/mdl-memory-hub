@@ -225,9 +225,9 @@ consumeTransRefundPack → 业务校验 → 查询原消费
 
 - **完整设计文档**: [供应链交易系统设计文档 v5.5](./SUPPLY_CHAIN_DESIGN_V5.5.md)
 - **飞书文档**: https://jvn4jogcy6u.feishu.cn/docx/IYn3dcLQ9odELzxY5MjcHdTAn6f
-- **项目路径**: `/Users/limeng/workspaces/IdeaProjects_lsym_dep/slhy`
+- **项目路径**: `/Users/limeng/workspaces/IdeaProjects_mdl_dep/mdl`
 
 ---
 
 **更新时间**: 2026-03-03
-**项目**: lsym-memory
+**项目**: mdl-memory-hub

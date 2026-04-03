@@ -4,14 +4,14 @@
 
 ## 1. 项目定位
 
-- 主代码仓：`/Users/limeng/workspaces/IdeaProjects_mdl_dep/slhy`
+- 主代码仓：`/Users/limeng/workspaces/IdeaProjects_mdl_dep/mdl`
 - 记忆/文档仓：`/Users/limeng/workspaces/IdeaProjects_mdl_dep/mdl-memory-hub`
 - 业务领域：`mdl` 麦当劳餐饮资金体系（从 lsym 迁移，供应链部分相同）
-- 主工作范围：`slhy/fund-catering`
+- 主工作范围：`mdl/fund-catering-*`
 
 ## 2. 技术主线
 
-- 语言和框架：`Java 17`、`Spring Boot 2.x`
+- 语言和框架：`Java 17`、`Spring Boot 3.2.4`
 - 流程编排：`LiteFlow`
 - 数据访问：`MyBatis Plus`
 - 基础设施：`Redis`、`Nacos`
@@ -22,7 +22,7 @@
 2. `mdl-memory-hub/docs/SUPPLY_CHAIN_DESIGN_V5.5.md`
 3. `mdl-memory-hub/architecture/FRAMEWORK_STRUCTURE.md`
 4. `mdl-memory-hub/modules/MODULE_FUND_CATERING.md`
-5. 对应源码目录 `slhy/fund-catering/...`
+5. 对应源码目录 `mdl/fund-catering-...`
 
 ## 4. 核心业务记忆
 
@@ -82,7 +82,11 @@
 
 - 默认情况下：
   - `md` 文档、分析结论、项目记忆放 `mdl-memory-hub`
-  - 源码、配置、资源文件放 `slhy`
+  - 源码、配置、资源文件放 `mdl`
+
+- 目录命名说明：
+  - 仓库目录使用 `mdl/`
+  - Java 包名中的 `slhy` 仍是历史命名空间，阅读代码时不要把包名误判为仓库路径
 - 只有用户明确要求时，才把文档放进代码仓
 
 ## 10. 会话工作习惯

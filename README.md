@@ -46,7 +46,7 @@ mdl-memory-hub/
 |------|------|
 | **项目名称** | mdl (麦当劳餐饮资金体系) |
 | **负责人** | 李蒙 (ssssgoldhunter) |
-| **主项目路径** | `/Users/limeng/workspaces/IdeaProjects_mdl_dep/slhy` |
+| **主项目路径** | `/Users/limeng/workspaces/IdeaProjects_mdl_dep/mdl` |
 | **记忆库路径** | `/Users/limeng/workspaces/IdeaProjects_mdl_dep/mdl-memory-hub` |
 | **来源项目** | lsym (餐饮资金体系) - 供应链部分相同 |
 | **飞书文档** | https://jvn4jogcy6u.feishu.cn |
@@ -81,6 +81,7 @@ mdl-memory-hub/
 
 | 日期 | 更新内容 |
 |------|----------|
+| 2026-04-03 | 记忆体路径校正：主仓路径统一更新为 `mdl/`，并按当前代码结构修正文档导航 |
 | 2026-03-19 | 项目迁移：从 lsym 迁移到 mdl（麦当劳），更新所有路径配置 |
 | 2026-03-06 | 模块文档补充：新增 9 个模块文档，包括 base/front/management/task/data-batch/report/check/api/database |
 | 2026-03-04 | 文档整理：删除 6 个重复文件，创建 CLAUDE.md |

@@ -1,6 +1,6 @@
 # 工作偏好：文档和记忆体管理规则
 
-> **重要规则**: 除非用户直接要求，所有 md 文档和记忆体内容都应存放在 lsym-memory 记忆体项目中
+> **重要规则**: 除非用户直接要求，所有 md 文档和记忆体内容都应存放在 mdl-memory-hub 记忆体项目中
 
 ## 📋 核心规则
 
@@ -8,33 +8,33 @@
 
 | 类型 | 存储位置 | 说明 |
 |------|----------|------|
-| **md 文档** | `lsym-memory/` | 所有 Markdown 文档都放在记忆体项目 |
-| **记忆体内容** | `lsym-memory/` | AI 助手的学习内容、项目知识等 |
-| **项目文档** | `lsym-memory/docs/` | 项目的核心设计文档 |
-| **快速参考** | `lsym-memory/business-flows/` | 业务流程快速参考 |
-| **技术文档** | `lsym-memory/architecture/` | 架构设计文档 |
-| **工作流程** | `lsym-memory/workflow/` | 工作流程和偏好设置 |
+| **md 文档** | `mdl-memory-hub/` | 所有 Markdown 文档都放在记忆体项目 |
+| **记忆体内容** | `mdl-memory-hub/` | AI 助手的学习内容、项目知识等 |
+| **项目文档** | `mdl-memory-hub/docs/` | 项目的核心设计文档 |
+| **快速参考** | `mdl-memory-hub/business-flows/` | 业务流程快速参考 |
+| **技术文档** | `mdl-memory-hub/architecture/` | 架构设计文档 |
+| **工作流程** | `mdl-memory-hub/workflow/` | 工作流程和偏好设置 |
 
 ### 不放在记忆体的内容
 
 | 类型 | 存储位置 | 说明 |
 |------|----------|------|
-| **源代码** | `slhy/` 项目目录 | 代码文件放在项目中 |
-| **配置文件** | `slhy/` 项目目录 | 配置文件放在项目中 |
-| **资源文件** | `slhy/` 项目目录 | 静态资源放在项目中 |
-| **编译产物** | `slhy/` 项目目录 | 编译生成的文件 |
+| **源代码** | `mdl/` 项目目录 | 代码文件放在项目中 |
+| **配置文件** | `mdl/` 项目目录 | 配置文件放在项目中 |
+| **资源文件** | `mdl/` 项目目录 | 静态资源放在项目中 |
+| **编译产物** | `mdl/` 项目目录 | 编译生成的文件 |
 
 ## 🎯 使用场景
 
 ### 多台电脑协作
 
 1. **电脑 A** 工作
-   - 拉取最新的 lsym-memory 仓库
+   - 拉取最新的 mdl-memory-hub 仓库
    - 查看记忆体中的项目信息
    - 继续工作
 
 2. **电脑 B** 工作
-   - 拉取最新的 lsym-memory 仓库
+   - 拉取最新的 mdl-memory-hub 仓库
    - 获取电脑 A 更新的记忆体内容
    - 继续工作
 
@@ -63,7 +63,7 @@ AI 助手会在以下情况更新记忆体：
 ### 保存文档到记忆体
 
 ```bash
-cd /Users/limeng/workspaces/IdeaProjects_lsym_dep/lsym-memory
+cd /Users/limeng/workspaces/IdeaProjects_mdl_dep/mdl-memory-hub
 
 # 编辑或添加文档
 vim docs/NEW_DOCUMENT.md
@@ -77,7 +77,7 @@ git push
 ### 从记忆体获取信息
 
 ```bash
-cd /Users/limeng/workspaces/IdeaProjects_lsym_dep/lsym-memory
+cd /Users/limeng/workspaces/IdeaProjects_mdl_dep/mdl-memory-hub
 
 # 拉取最新内容
 git pull
@@ -89,7 +89,7 @@ cat docs/TRANSACTION_QUICK_REFERENCE.md
 ## 📂 记忆体目录结构
 
 ```
-lsym-memory/
+mdl-memory-hub/
 ├── docs/                    # 所有设计文档和参考文档
 │   ├── SUPPLY_CHAIN_DESIGN_V5.5.md
 │   ├── TRANSACTION_QUICK_REFERENCE.md
@@ -114,8 +114,8 @@ lsym-memory/
 ## 🔄 与项目的关系
 
 ```
-slhy/                          lsym-memory/
-├── fund-catering/            ├── docs/           (从slhy迁移的文档)
+mdl/                           mdl-memory-hub/
+├── fund-catering-*           ├── docs/           (从旧项目迁移并持续维护的文档)
 │   ├── fund-catering-        ├── architecture/    (技术架构)
 │   ├── fund-catering-front/   ├── business-flows/  (业务流程)
 │   └── ...                   ├── workflow/       (工作偏好)
@@ -134,4 +134,4 @@ slhy/                          lsym-memory/
 
 **生效日期**: 2026-03-03
 **更新原因**: 支持多台电脑协作，统一文档管理
-**GitHub**: https://github.com/ssssgoldhunter/lsym-memory-hub
+**GitHub**: https://github.com/ssssgoldhunter/mdl-memory-hub

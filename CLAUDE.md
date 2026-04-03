@@ -10,7 +10,7 @@
 |------|------|
 | **项目名称** | mdl (麦当劳餐饮资金体系) |
 | **负责人** | 李蒙 (ssssgoldhunter) |
-| **主项目路径** | `/Users/limeng/workspaces/IdeaProjects_mdl_dep/slhy` |
+| **主项目路径** | `/Users/limeng/workspaces/IdeaProjects_mdl_dep/mdl` |
 | **记忆库路径** | `/Users/limeng/workspaces/IdeaProjects_mdl_dep/mdl-memory-hub` |
 | **来源项目** | lsym (餐饮资金体系) - 供应链部分相同 |
 | **飞书文档** | https://jvn4jogcy6u.feishu.cn |
@@ -22,7 +22,7 @@
 | 技术 | 版本 | 用途 |
 |------|------|------|
 | Java | 17 | 开发语言 |
-| Spring Boot | 2.x | 应用框架 |
+| Spring Boot | 3.2.4 | 应用框架 |
 | LiteFlow | 最新版 | 流程编排引擎（核心） |
 | MyBatis Plus | 最新版 | ORM 框架 |
 | Redis | - | 分布式锁、缓存 |
@@ -102,7 +102,7 @@ Pack → Check → Trans → After
 
 | 类型 | 路径 |
 |------|------|
-| 消费服务 | `/Users/limeng/workspaces/IdeaProjects_mdl_dep/slhy/fund-catering/fund-catering-consume` |
+| 消费服务 | `/Users/limeng/workspaces/IdeaProjects_mdl_dep/mdl/fund-catering-consume` |
 | LiteFlow 配置 | `fund-catering-consume-service/src/main/resources/liteflow/` |
 | Trans 组件 | `flow/component/trans/` |
 | Query 组件 | `flow/component/query/` |
@@ -127,8 +127,10 @@ Pack → Check → Trans → After
 
 | 类型 | 存储位置 |
 |------|----------|
-| 源代码 | `slhy/` 项目目录 |
-| 配置文件 | `slhy/` 项目目录 |
+| 源代码 | `mdl/` 项目目录 |
+| 配置文件 | `mdl/` 项目目录 |
+
+> 说明：仓库根目录已切换为 `mdl/`，但 Java 包名中仍保留历史前缀 `com.chinaums.erp.slhy...`，这是代码命名空间，不代表仓库目录。
 
 ### 对话日志管理
 

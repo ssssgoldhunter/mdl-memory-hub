@@ -16,12 +16,12 @@
 ## 项目路径
 
 ```
-slhy/fund-catering/
+mdl/
 ├── fund-catering-base/          # 账户基础服务
 ├── fund-catering-consume/       # 消费服务
 ├── fund-catering-task/          # 定时任务服务
 ├── fund-catering-data-batch/    # 批处理服务
-├── fund-catering-front/         # 前端路由服务
+├── fund-catering-front/         # 前置/通道路由服务
 ├── fund-catering-management/    # 管理后台服务
 ├── fund-catering-report/        # 报表服务
 └── fund-catering-web/           # Web接口服务
