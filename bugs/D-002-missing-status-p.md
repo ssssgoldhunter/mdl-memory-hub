@@ -2,7 +2,7 @@
 
 - **需求**: D
 - **级别**: 严重
-- **状态**: 待确认修复
+- **状态**: 已修复
 - **发现日期**: 2026-04-03
 - **违反边界**: 需求D规则9 "Task starts payer side: to_status=P, ti_status=I, status=P"
 
