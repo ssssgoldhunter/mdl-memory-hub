@@ -1,6 +1,6 @@
 # 需求总览
 
-更新时间：2026-03-31 10:18:00 CST
+更新时间：2026-04-03 10:00:00 CST
 
 > 当前实现边界以 `docs/superpowers/mdl-supply-chain-abcd/00-current-baseline.md` 为准。  
 > 旧讨论中的模糊概念、过渡方案、已废弃方案，不再作为当前开发依据。
@@ -10,7 +10,7 @@
 - 大计划名称：
   - `mdl定制`
 - 当前 `A/B/C/D/front` 统一归属 `mdl定制` 下的供应链改造计划
-- 后续扩展中的 `E` 批量扣款设计，也统一归属该计划
+- 后续扩展中的 `E` 批量扣款，也统一归属该计划
 
 ## 当前需求
 
@@ -66,16 +66,17 @@
 
 - 名称：批量扣款
 - 当前状态：
-  - 处于设计阶段
-  - 设计稿已产出
+  - 已完成当前实现口径
+  - 测试已通过
 - 核心点：
-  - 业务语义复用 `B`
+  - 业务语义复用 `B`，代码链路与单笔 `B` 完全隔离
   - 执行模型参考 `D02`
-  - 接口阶段先落明细，再预落交易骨架
+  - 接口阶段先落明细，再预落交易骨架（`chainDeductionPre`）
   - `transNo` 必传，由调用方提供
-  - task 扫明细表逐条执行
-  - 单条执行入口内部根据 `useFrozen` 分普通扣款与冻结扣款
-  - 冻结扣款依赖 `orgFrozenTransNo`
+  - task 扫明细表逐条执行（`DeductionBatchTaskJobService`）
+  - 单条执行入口 `processDeductionDetail02` 内部根据 `useFrozen` 分普通扣款与冻结扣款
+  - 冻结扣款依赖 `orgFrozenTransNo`，复用 `FrozenPoolHelper`
+  - 接口阶段不锁卡，task 单条执行前锁付款卡和收款卡
 
 ## 当前状态
 
@@ -88,9 +89,12 @@
    - 已完成当前实现口径
 4. `D`
    - 已完成当前实现口径
-5. `front`
+5. `E`
+   - 已完成当前实现口径
+   - 测试已通过
+6. `front`
    - `B/D` 通知与 `24h` 重发已完成
-6. 自动化测试与联调
+7. 自动化测试与联调
    - 未完成
 
 ## 当前开发依据
@@ -101,6 +105,8 @@
   - `2026-03-26-abcd-front-design-confirmed.md`
 - `E` 设计稿：
   - `docs/superpowers/specs/2026-03-31-e-batch-deduction-design.md`
+- `E` 实现计划：
+  - `docs/plans/2026-03-31-e-batch-deduction-implementation-plan.md`
 - 当前实现基线：
   - `docs/superpowers/mdl-supply-chain-abcd/00-current-baseline.md`
   - `docs/superpowers/mdl-supply-chain-abcd/01-code-state.md`

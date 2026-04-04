@@ -37,3 +37,21 @@
 | AF-1 | A+Front | 重要 | WithDrawRuleCheck isAccess 不检查 needRuleCheck | 已修复 | [AF-001](./AF-001-withdraw-rule-check-access.md) |
 | AF-2 | A+Front | 重要 | Front 通知 catch Exception 吞掉错误 | 已修复 | [AF-002](./AF-002-front-catch-swallow.md) |
 | AF-3 | A+Front | 重要 | messageMaxRetries 注入但未使用 | 已修复 | [AF-003](./AF-003-message-max-retries-unused.md) |
+| E-6 | E | 严重 | frozenResult 返回 null 时 NPE（三处） | 已修复 | [E-006](./E-006-frozen-result-npe.md) |
+| E-7 | E | 严重 | 余额已改但明细未落，无回滚 | 不修复 | [E-007](./E-007-balance-detail-no-rollback.md) |
+| E-8 | E | 严重 | 冻结两步写非原子，第二步失败无补偿 | 已修复 | [E-008](./E-008-frozen-two-step-no-rollback.md) |
+| E-9 | E | 严重 | task 分页扫描可能重复拾取 status=P 的明细 | 已修复 | [E-009](./E-009-task-scan-refetch-p.md) |
+| E-10 | E | 重要 | 失败处理中状态更新可能部分成功 | 已修复 | [E-010](./E-010-fail-handler-partial-status.md) |
+| E-11 | E | 重要 | 预落地失败后明细卡在F，无重试机制 | 已修复 | [E-011](./E-011-failed-detail-no-retry.md) |
+| E-12 | E | 重要 | transNo 存在性检查与插入之间无DB唯一约束 | 不修复 | [E-012](./E-012-transno-toctou-race.md) |
+| E-13 | E | 重要 | 分页字段名不匹配（current vs pageNum） | 已确认非缺陷 | [E-013](./E-013-pagination-field-mismatch.md) |
+| E-14 | E | 重要 | handleReceiveSide 只刷新不验证 | 已修复 | [E-014](./E-014-receive-side-no-verify.md) |
+| E-15 | E | 重要 | @Transactional 在 LiteFlow NodeComponent 上可能不生效 | 不修复 | [E-015](./E-015-liteflow-transactional.md) |
+| E-16 | E | 一般 | transTime substring 无长度校验 | 已修复 | [E-016](./E-016-transtime-substring-validation.md) |
+| E-17 | E | 一般 | amount 为 null 或零/负数时校验不充分 | 已修复 | [E-017](./E-017-amount-validation-gap.md) |
+| B-1 | B | 严重 | subTransList 无空检查导致部分写入 | 已修复 | [B-001](./B-001-subtranslist-npe.md) |
+| B-2 | B | 重要 | map lookup 返回 null 无检查 | 已修复 | [B-002](./B-002-map-lookup-null.md) |
+| B-3 | B | 重要 | 子交易 org/operator 字段使用了收款方业务信息 | 已修复 | [B-003](./B-003-wrong-org-fields.md) |
+| B-4 | B | 重要 | frozenAmt 为 null 时 subtract NPE | 已修复 | [B-004](./B-004-frozenamt-null-subtract.md) |
+| B-5 | B | 一般 | 冗余代码：无效 re-put 和冗余刷新 | 已修复 | [B-005](./B-005-redundant-code-issues.md) |
+| BC-5 | B+C | 重要 | FrozenPoolHelper getFrozenAmt 为 null 时 NPE | 已修复 | [BC-005](./BC-005-frozenamt-null-in-helper.md) |

@@ -1,6 +1,6 @@
 # 当前实现基线
 
-更新时间：2026-03-31 10:10:00 CST
+更新时间：2026-04-03 10:00:00 CST
 
 ## 0. 计划归属
 
@@ -235,27 +235,96 @@
   - `C` 解冻使用 `orgTransNo`
   - `B` 冻结扣款使用 `orgFrozenTransNo`
 
-## 6. front 基线
+## 6. E 基线
 
-### 6.1 A
+### 6.1 定义
+
+`E` 是"批量版扣款 02 模式"：
+
+- 扣款业务语义参考 `B`
+- 执行模型参考 `D02`
+- 代码链路与单笔 `B` 完全隔离
+
+### 6.2 两阶段模型
+
+#### 阶段 1：接口预落地
+
+- 接口阶段不做真实账务动作
+- 固定顺序：先落 `trans_deduction_batch_detail` → 再落交易骨架（`chainDeductionPre`）
+- 交易骨架落 `trans_consume_t / trans_consume_sub_t / trans_consume_sub_rec_t`，状态 `P`
+- 接口阶段不锁卡
+
+#### 阶段 2：task 扫明细执行
+
+- task 分页扫 `trans_deduction_batch_detail`（`status in (I, P)`）
+- 逐条调单条执行入口 `processDeductionDetail02`
+- task 级 Redis 锁避免重复并发
+
+### 6.3 单条执行入口
+
+- 外部只保留一个入口：`processDeductionDetail02(transNo)`
+- 入口内部按 `useFrozen` 分流：
+  - `useFrozen = N`：普通扣款（前置冻结 → front → 解冻 → 同步更新收付款卡）
+  - `useFrozen = Y`：冻结扣款（消费原冻结额度 → 同步更新收付款卡）
+- 执行前锁付款卡 + 收款卡，两把都成功才继续
+- 锁失败不标记永久失败，可由 task 下轮重试
+
+### 6.4 数据模型
+
+- 核心表：`trans_deduction_batch_detail`
+- `transNo` 必传，由调用方提供
+- `useFrozen` 默认 `N`
+- `useFrozen = Y` 时 `orgFrozenTransNo` 必填
+- 主交易类型 `D`，明细类型 `DC/DR`
+- 只支持 `04`
+
+### 6.5 状态机
+
+| 阶段 | frontStatus | dcStatus | drStatus | status |
+|------|------------|----------|----------|--------|
+| 受理成功 | I | I | I | I |
+| 开始执行 | - | - | - | P |
+| front成功 | S | P | I | P |
+| 付款侧成功 | - | S | P | P |
+| 全部成功 | S | S | S | S |
+| 任意失败 | F | F | F | F |
+
+### 6.6 冻结扣款与冻结池关系
+
+- `useFrozen = Y` 时通过 `orgFrozenTransNo` 找原始冻结 `F`
+- 复用 `FrozenPoolHelper` 消费原冻结额度
+- 生成本次 `D`，更新原始 `F`
+- 冻结金额变动明细复用 `createFrozenDetail(...)`
+
+### 6.7 E 不做的事
+
+- 不修改单笔 `B` 的既有业务语义
+- 不自动生成 `transNo`
+- 不整批同步执行
+- 不在接口阶段做真实账户变更
+- 不减少交易骨架表数量
+
+## 7. front 基线
+
+### 7.1 A
 
 - 只管提现结果通知
 - 不负责提现前查询
 
-### 6.2 B / D
+### 7.2 B / D
 
 - `B`
   - `TOPIC_NOTIFY_CATERING_DEDUCTION`
 - `D`
   - `TOPIC_NOTIFY_CATERING_TRANSFER`
 
-### 6.3 重发
+### 7.3 重发
 
 - 继续复用现有 HTTP consumer 框架
 - `24` 小时窗口内持续重发
 - 超过 `24` 小时不再继续调度
 
-## 7. 当前唯一明确未完成项
+## 8. 当前唯一明确未完成项
 
 - `A` 的清结算真实查询接口
 - 自动化测试

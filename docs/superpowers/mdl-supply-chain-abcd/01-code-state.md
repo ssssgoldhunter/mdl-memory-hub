@@ -1,6 +1,6 @@
 # 当前代码状态
 
-更新时间：2026-03-31 10:10:00 CST
+更新时间：2026-04-03 10:00:00 CST
 
 ## 1. 已落地
 
@@ -68,6 +68,36 @@
 - `B` 扣款 topic 已具备
 - `D` 划付 topic 已具备
 - HTTP consumer 已支持 24 小时窗口内重发
+
+### E
+
+- Web 入口：
+  - `/consume/transDeductionBatch/batchPreCreate`
+  - `/consume/transDeductionBatch/queryPendingDetailPage`
+  - `/consume/transDeductionBatch/processDeductionDetail02`
+- LiteFlow 预落地链 `chainDeductionPre` 已独立
+  - `DeductionBatchPreCreatePack`：校验 + slot 设置
+  - `DeductionBatchPreCreate`：落四表交易骨架（status=P）
+- 批量受理 `TransDeductionBatchBusinessServiceImpl`：
+  - 批量入参校验 + transNo 去重
+  - 先落 `trans_deduction_batch_detail`（status=I）
+  - 再逐条调 LiteFlow 预落交易骨架
+- 单条执行 `DeductionBatchExecuteServiceImpl`（933行）：
+  - `processDeductionDetail02(transNo)`
+  - task 阶段锁付款卡 + 收款卡（30s）
+  - 根据 `useFrozen` 分流普通扣款 / 冻结扣款
+  - `useFrozen=N`：前置冻结 → front 消费 → 解冻 → 同步更新收付款卡
+  - `useFrozen=Y`：校验原冻结剩余额度 → front 消费 → 消费原冻结额度 → 同步更新收付款卡
+  - 收付款账户变更明细类型 `DC/DR`
+  - 冻结变动明细复用 `createFrozenDetail(...)`
+  - 状态机完整：I → P → S/F
+- Task `DeductionBatchTaskJobService`：
+  - XXL-Job `deductionBatchTaskJobService`
+  - 任务级 Redis 锁（300s）
+  - 分页扫 `status in (I, P)` 的明细
+  - 逐条调 `processDeductionDetail02`
+- `FlowChainEnums` 已新增 `CHAIN_TRANS_DEDUCTION_PRE`
+- 测试已通过
 
 ## 2. 已清理的错误实现
 
