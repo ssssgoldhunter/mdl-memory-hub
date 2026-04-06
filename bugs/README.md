@@ -68,6 +68,6 @@
 | B-6 | B | 高 | transDeduction 缺少 MAC 幂等校验 | 待确认修复 | [B-006](./B-006-deduction-no-mac-idempotent.md) |
 | BC-6 | B+C | 高 | FrozenTrans/UnFrozenTrans findFirst().get() 未处理空 | 待确认修复 | [BC-006](./BC-006-findfirst-no-empty-check.md) |
 | BC-7 | B+C | 高 | liteflowResponse.getCause() 为 null 时异常处理不当 | 待确认修复 | [BC-007](./BC-007-liteflow-cause-null.md) |
-| F-1 | Front | 高 | HttpDeductionMessageConsumeHandle properties NPE | 待确认修复 | [F-001](./F-001-deduction-properties-npe.md) |
-| F-2 | Front | 高 | HTTP 响应 body 空指针 | 待确认修复 | [F-002](./F-002-http-response-body-npe.md) |
-| F-3 | Front | 高 | MessageSendServiceImpl messageTypeTopic NPE | 待确认修复 | [F-003](./F-003-message-topic-npe.md) |
+| F-1 | Front | 高 | HttpDeductionMessageConsumeHandle properties NPE | 已修复 | [F-001](./F-001-deduction-properties-npe.md) |
+| F-2 | Front | 高 | HTTP 响应 body 空指针 | 已修复 | [F-002](./F-002-http-response-body-npe.md) |
+| F-3 | Front | 高 | MessageSendServiceImpl messageTypeTopic NPE | 已修复 | [F-003](./F-003-message-topic-npe.md) |
