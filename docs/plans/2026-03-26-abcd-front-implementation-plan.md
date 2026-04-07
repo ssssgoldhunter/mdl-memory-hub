@@ -2,9 +2,9 @@
 
 > **For agentic workers:** REQUIRED: Use superpowers:subagent-driven-development (if subagents available) or superpowers:executing-plans to implement this plan. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** 完成 `A/B/C/D` 与 `front` 的清结算对接改造，落地提现前规则校验、扣款/划付通知、原冻结能力边界与 `front` 24 小时重发机制。
+**Goal:** 完成 `A/B/C/D` 与 `front` 的清结算对接改造，落地提现前规则校验、扣款/划付通知、原冻结能力边界与 `front` 1 小时重发机制。
 
-**Architecture:** 以 `front` 作为统一清结算对接出口。`A` 在提现主流程中新增 LiteFlow 校验节点并通过 `front` 查询清结算；`B`、`D` 在业务侧完成各自后置处理后投递到 `front`，由 `front` 执行 HTTP/Feign 通知与 24 小时重发；`C` 保持独立 Web API / service 能力，不进入异步通知模型。
+**Architecture:** 以 `front` 作为统一清结算对接出口。`A` 在提现主流程中新增 LiteFlow 校验节点并通过 `front` 查询清结算；`B`、`D` 在业务侧完成各自后置处理后投递到 `front`，由 `front` 执行 HTTP/Feign 通知与 1 小时重发；`C` 保持独立 Web API / service 能力，不进入异步通知模型。
 
 **Tech Stack:** Java 17, Spring Boot, LiteFlow, OpenFeign, RocketMQ, Redis, MyBatis Plus
 
@@ -275,7 +275,7 @@
 
 ---
 
-### Task 7: front 清结算查询与 24 小时重发改造
+### Task 7: front 清结算查询与 1 小时重发改造
 
 **Files:**
 - Modify: `bwcj/fund-catering-front` 中 facade、controller、service、consumer、消息日志、重发控制相关文件
@@ -296,11 +296,11 @@
 - 当前最大重试次数逻辑
 - 当前消息日志能力
 
-- [ ] **Step 3: 改造 B/D 的重发控制为 24 小时窗口**
+- [ ] **Step 3: 改造 B/D 的重发控制为 1 小时窗口**
 
 要求：
 - 记录首次发送时间
-- 24 小时内持续重发
+- 1 小时内持续重发
 - 超时登记失败
 - 不再被原有限次重试直接截断
 
@@ -316,7 +316,7 @@
 至少覆盖：
 - 查询接口调用成功
 - B/D 通知进入重发
-- 24 小时超时后登记失败
+- 1 小时超时后登记失败
 
 ---
 
@@ -340,7 +340,7 @@
 - B 异步上账后通知
 - C Web/API 与 service 边界
 - D task 成功后通知
-- front 24 小时重发
+- front 1 小时重发
 
 - [ ] **Step 3: 运行模块级验证**
 

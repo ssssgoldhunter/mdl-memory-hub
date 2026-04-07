@@ -67,7 +67,7 @@
 
 - `B` 扣款 topic 已具备
 - `D` 划付 topic 已具备
-- HTTP consumer 已支持 24 小时窗口内重发
+- HTTP consumer 已支持 1 小时窗口内重发
 
 ### E
 
