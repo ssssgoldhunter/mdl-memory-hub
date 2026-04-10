@@ -1,6 +1,6 @@
 # 需求总览
 
-更新时间：2026-04-03 10:00:00 CST
+更新时间：2026-04-10 15:30:00 CST
 
 > 当前实现边界以 `docs/superpowers/mdl-supply-chain-abcd/00-current-baseline.md` 为准。  
 > 旧讨论中的模糊概念、过渡方案、已废弃方案，不再作为当前开发依据。
@@ -36,7 +36,9 @@
   - 支持 `useFrozen=true/false`
   - `useFrozen=false`：前置冻结、账户变动前解冻、同步更新收付款卡
   - `useFrozen=true`：直接消费原冻结额度、同步更新收付款卡
-  - 扣款成功后的通知走独立 deduction topic
+  - 扣款成功后仍通过 `RocketMQ` 投递到 `front`
+  - `front` 消费者后续不再走 `URL` 回调
+  - 当前代码在 `front` 消费者中登记“待清结算 API” `TODO`
 
 ### 需求 C
 
@@ -62,6 +64,9 @@
   - `02` 真正执行由 `fund-catering-task` 扫明细后逐条调 `processDetail02`
   - `isFrozen=true` 时，收款卡上账成功后写新的原冻结 `F`
   - `D` 全部属于划付域，不属于原转账链
+  - 划付成功后仍通过 `RocketMQ` 投递到 `front`
+  - `front` 消费者后续不再走 `URL` 回调
+  - 当前代码在 `front` 消费者中登记“待清结算 API” `TODO`
 
 ### 需求 E
 
@@ -94,7 +99,9 @@
    - 已完成当前实现口径
    - 测试已通过
 6. `front`
-   - `B/D` 通知与 `1h` 重发已完成
+   - `B/D/银行实收` 仍保留 `RocketMQ` 通知结构
+   - 当前改造点在 `front` 消费者内部发送模式
+   - 只有提现结果通知继续沿用现有回调链路
 7. 自动化测试与联调
    - 未完成
 
