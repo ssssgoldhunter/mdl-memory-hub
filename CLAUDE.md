@@ -12,7 +12,9 @@
 | **负责人** | 李蒙 (ssssgoldhunter) |
 | **主项目路径** | `/Users/limeng/workspaces/IdeaProjects_mdl_dep/mdl` |
 | **记忆库路径** | `/Users/limeng/workspaces/IdeaProjects_mdl_dep/mdl-memory-hub` |
-| **来源项目** | lsym (餐饮资金体系) - 供应链部分相同 |
+| **来源项目** | bwcj + lsym (餐饮资金体系) - 供应链部分相同 |
+| **lsym 项目路径** | `D:\workspaces\IdeaProjects_lsym_uat` (本机) |
+| **bwcj 项目路径** | 待补充 |
 | **飞书文档** | https://jvn4jogcy6u.feishu.cn |
 
 ---
@@ -170,6 +172,15 @@ Pack → Check → Trans → After
 ## 🤖 AI 自定义指令
 
 > 以下指令约束 AI 助手在 mdl 项目中的行为
+
+### 代码迁移规范
+
+> **约束项**: 从 lsym 迁移代码到 mdl 时，严格按以下流程执行
+
+**执行流程**:
+1. 对比 lsym 和 mdl 的代码差异，不遗漏任何变动
+2. 不做主观判断（不判断是否是 bug），只如实迁移 lsym 侧的修改
+3. 用户说需要迁移就迁移，不要替用户决定哪些该迁哪些不该迁
 
 ### 任务结束流程
 
