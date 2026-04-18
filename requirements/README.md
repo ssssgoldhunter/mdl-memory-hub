@@ -21,14 +21,23 @@
   - 当前 `mdl` 供应链 A/B/C/D/front 续聊主入口
 - `2026-03-27-abcd-front-implementation-baseline.md`
   - 当前 A/B/C/D/front 实现基线，优先级高于旧确认稿
-- `req-a-withdraw-rule`
-  - 提现接口及规则改造
-- `req-b-deduction-api`
-  - 新增扣款接口
-- `req-c-frozen-refactor`
-  - 原冻结交易改造
-- `req-d-transfer-mode-refactor`
-  - 划付模式改造
+
+### 需求状态（2026-04-18 更新）
+
+| 需求 | 名称 | 状态 |
+|------|------|------|
+| A | 提现接口及规则改造 | 已完成主链（清结算查询 TODO） |
+| B | 新增扣款接口 | ✅ 已完成 |
+| C | 原冻结交易改造 | ✅ 已完成 |
+| D | 划付模式改造 | ✅ 已完成 |
+| E | 批量扣款 | ✅ 已完成（测试通过） |
+| front | B/D/银行实收通知 | 已完成（清结算通知 TODO） |
+
+### 需求详情目录
+
+- `req-b-deduction-api/` — 扣款接口详情
+- `req-c-frozen-refactor/` — 冻结交易改造详情
+- `req-d-transfer-mode-refactor/` — 划付模式改造详情
 
 ## 维护规则
 

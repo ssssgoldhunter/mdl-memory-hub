@@ -1,8 +1,15 @@
 # 账户变动模块重构计划
 
-> **状态**: 待处理（后期重构）
+> **状态**: 部分落地（2026-04-18 更新）
 > **创建日期**: 2026-03-12
 > **优先级**: 中
+>
+> **进度更新（2026-04-18）**:
+> - ✅ `BaseAccountServiceApi` 已落地 5 个场景批量接口
+> - ✅ consume 主交易路径 TransAfter 组件已全部接入
+> - ❌ 6 张明细/冻结/Entry 表仍在 consume 库，未迁移到 base
+> - ❌ task 模块 `PaWithDrawUpdateStatusAfterService`、`TransferRecallServiceImpl` 仍用 `updateCardSubAccount`
+> - ❌ 无独立 `AccountChangeController`，功能合并于 `BaseAccountFacadeController`
 
 ---
 

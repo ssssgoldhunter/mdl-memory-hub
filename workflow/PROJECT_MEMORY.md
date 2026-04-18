@@ -67,16 +67,21 @@
   3. 更新前是否刷新账户信息
   4. 是否走了正确的账户变动 API
 
-## 8. 当前账户变动现状
+## 8. 当前账户变动现状（2026-04-18 更新）
 
 - 真实入口是 `BaseAccountServiceApi` 这组接口：
-  - `batchChangeAccount`
-  - `batchChangeAccountForRecharge`
-  - `batchChangeAccountForRefundRecharge`
-  - `batchChangeAccountForConsume`
-  - `batchChangeAccountForRefundConsume`
-- 设计中的统一 `AccountChangeApi` 目前还未完整落地
+  - `batchChangeAccount` — 通用批量
+  - `batchChangeAccountForRecharge` — 充值
+  - `batchChangeAccountForRefundRecharge` — 充值退款
+  - `batchChangeAccountForConsume` — 消费/扣款
+  - `batchChangeAccountForRefundConsume` — 消费退款
+- 以上 5 个场景接口已完整落地，consume 主交易路径已全部接入
+- task 模块部分旧路径仍存在：
+  - `PaWithDrawUpdateStatusAfterService` 仍用 `updateCardSubAccount`
+  - `TransferRecallServiceImpl` 仍用 `updateCardSubAccount`
+  - `AccountEntryAfterService` 已不再直接调用 `updateCardSubAccount`
 - "6 张明细/冻结/Entry 表迁移到 base 库并统一事务" 仍属于进行中的重构方向
+- 无独立 `AccountChangeController`，功能合并于 `BaseAccountFacadeController`
 
 ## 9. 文档与记忆存放规则
 
@@ -155,3 +160,13 @@
 4. 2026-03-17 已确认并修正的实例：
    - `TransferTrans`
    - `TransferTransAuth`
+
+## 12. 供应链 ABCD/E 需求完成状态（2026-04-18 更新）
+
+- **A（提现规则改造）**：主链完成，清结算查询仍为 TODO
+- **B（扣款接口）**：✅ 完成 — `/scDeduction`、独立 deduction 组件、D 交易类型
+- **C（冻结交易改造）**：✅ 完成 — 冻结池模型、部分解冻/部分冻结扣款
+- **D（划付模式改造）**：✅ 完成 — 01/02 模式、task 扫描执行
+- **E（批量扣款）**：✅ 完成（测试通过） — 独立代码路径、processDeductionDetail02
+- **front 通知**：B/D/银行实收已切 RocketMQ（清结算通知仍 TODO）
+- **待做项**：清结算 API 对接、MAC 校验开启、task 旧路径清理
