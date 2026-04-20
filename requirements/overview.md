@@ -1,6 +1,6 @@
 # 需求总览
 
-更新时间：2026-04-10 15:30:00 CST
+更新时间：2026-04-20 14:35:00 CST
 
 > 当前实现边界以 `docs/superpowers/mdl-supply-chain-abcd/00-current-baseline.md` 为准。  
 > 旧讨论中的模糊概念、过渡方案、已废弃方案，不再作为当前开发依据。
@@ -27,7 +27,7 @@
 
 - 名称：新增扣款接口
 - 核心点：
-  - 对外入口复用消费体系，接口为 `/scDeduction`
+  - 对外入口复用消费体系，代码接口路径为 `/consume/trans/transDeduction`
   - 核心交易链与普通消费已分开
   - 复用原 `TransSlot`，不再单独分叉 slot
   - 主交易类型已改为 `D`
@@ -37,8 +37,8 @@
   - `useFrozen=false`：前置冻结、账户变动前解冻、同步更新收付款卡
   - `useFrozen=true`：直接消费原冻结额度、同步更新收付款卡
   - 扣款成功后仍通过 `RocketMQ` 投递到 `front`
-  - `front` 消费者后续不再走 `URL` 回调
-  - 当前代码在 `front` 消费者中登记“待清结算 API” `TODO`
+  - `front` 消费者当前已不走 `URL` 回调
+  - `front` 扣款消费者当前已直接调用清结算接口 `resultNotifyApi`
 
 ### 需求 C
 
@@ -65,8 +65,8 @@
   - `isFrozen=true` 时，收款卡上账成功后写新的原冻结 `F`
   - `D` 全部属于划付域，不属于原转账链
   - 划付成功后仍通过 `RocketMQ` 投递到 `front`
-  - `front` 消费者后续不再走 `URL` 回调
-  - 当前代码在 `front` 消费者中登记“待清结算 API” `TODO`
+  - `front` 消费者当前已不走 `URL` 回调
+  - `front` 划付消费者当前已直接调用清结算接口 `resultNotifyApi`
 
 ### 需求 E
 
@@ -100,7 +100,8 @@
    - 测试已通过
 6. `front`
    - `B/D/银行实收` 仍保留 `RocketMQ` 通知结构
-   - 当前改造点在 `front` 消费者内部发送模式
+   - `B/D/银行实收` 的 `front` 消费者当前已直接调用清结算接口
+   - 普通消费/充值等通知链仍兼容 `notifyUrl` 回调
    - 只有提现结果通知继续沿用现有回调链路
 7. 自动化测试与联调
    - 未完成

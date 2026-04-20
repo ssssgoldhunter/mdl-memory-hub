@@ -1,6 +1,6 @@
 # 当前代码状态
 
-更新时间：2026-04-10 15:30:00 CST
+更新时间：2026-04-20 14:50:00 CST
 
 ## 1. 已落地
 
@@ -46,7 +46,7 @@
 - `B` service 入口已改为先锁付款卡、收款卡
 - `B` 两个 after 已改成同步账户变更，不再走收款异步上账
 - 扣款成功后仍投递到 `front` deduction topic
-- `front` 扣款消费者已改成清结算 API `TODO` 占位
+- `front` 扣款消费者已直接调用清结算接口 `resultNotifyApi`
 
 ### D
 
@@ -62,13 +62,13 @@
 - `useFrozen/isFrozen` 元数据已透传到 task
 - `isFrozen=true` 已调整为“收款卡上账成功后立即写冻结”
 - 成功后仍投递到 `front` transfer topic
-- `front` 划付消费者已改成清结算 API `TODO` 占位
+- `front` 划付消费者已直接调用清结算接口 `resultNotifyApi`
 - `D` 已明确收回划付域，不再继续改原转账链
 
 ### front
 
 - `B/D/银行实收` 的 `RocketMQ` 通知结构仍保留
-- 扣款、划付、银行实收消费者已登记清结算 API `TODO`
+- 扣款、划付、银行实收消费者已直接调用清结算接口 `resultNotifyApi`
 - `B/D/银行实收` 不再以 `notifyUrl + HTTP consumer` 作为当前有效实现口径
 
 ### E
@@ -88,8 +88,8 @@
   - `processDeductionDetail02(transNo)`
   - task 阶段锁付款卡 + 收款卡（30s）
   - 根据 `useFrozen` 分流普通扣款 / 冻结扣款
-  - `useFrozen=N`：前置冻结 → 投递到 `front` → `front` 消费者待接清结算 API → 解冻 → 同步更新收付款卡
-  - `useFrozen=Y`：校验原冻结剩余额度 → 投递到 `front` → `front` 消费者待接清结算 API → 消费原冻结额度 → 同步更新收付款卡
+  - `useFrozen=N`：前置冻结 → 投递到 `front` → `front` 扣款消费者调用清结算接口 → 解冻 → 同步更新收付款卡
+  - `useFrozen=Y`：校验原冻结剩余额度 → 投递到 `front` → `front` 扣款消费者调用清结算接口 → 消费原冻结额度 → 同步更新收付款卡
   - 收付款账户变更明细类型 `DC/DR`
   - 冻结变动明细复用 `createFrozenDetail(...)`
   - 状态机完整：I → P → S/F
