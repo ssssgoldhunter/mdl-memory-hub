@@ -119,11 +119,49 @@ private String txnTime;
 private String finishTime;
 ```
 
-### 3.3 当前实现口径
+### 3.3 最新字段要求
+
+| 参数名 | 类型 | 是否必填 | 说明 |
+|------|------|------|------|
+| `merchantId` | `String` | 是 | 商户号，银商系统分配的商户号 |
+| `accountNo` | `String` | 是 | 持牌人编号，当前业务口径使用 `cardCode` |
+| `receiverAccount` | `String` | 是 | 持牌人收款账户号 |
+| `withdrawType` | `String` | 是 | 自动提现类型，`01`-手动提现，`02`-自动提现 |
+| `beforeBalance` | `String` | 是 | 交易前总可用余额；当前文档口径按账户变动明细表期初金额取值 |
+| `afterBalance` | `String` | 是 | 交易后总可用余额；当前文档口径按账户变动明细表期末金额取值 |
+| `orderNo` | `String` | 否 | FCT 发起提现时生成的提现订单号，按需求原文保留“`withdrawType=02 手动提现时必填`”描述，实际联调时需再确认该条件表述 |
+| `bankSerialNo` | `String` | 否 | 银商流水号，`status=00` 成功时必填 |
+| `type` | `String` | 否 | 提现类型，麦当劳提现专用字段。`00`-40%代扣提现，`01`-月度补扣款提现，`99`-其他 |
+| `status` | `String` | 是 | 提现状态。`00`：成功，`01`：失败 |
+| `amount` | `Number` | 是 | 提现金额，单位：元，保留 2 位小数 |
+| `failReason` | `String` | 否 | 失败原因描述，当 `status=01` 失败时提供 |
+| `txnTime` | `String` | 是 | 提现发起时间，格式 `YYYY-MM-DD HH:MM:SS` |
+| `finishTime` | `String` | 否 | 提现完成时间，格式 `YYYY-MM-DD HH:MM:SS`，当 `status=00` 成功时提供 |
+
+### 3.4 文档目标口径
+
+- `accountNo`：
+  - 按最新字段要求，应输出 `cardCode`
+  - 不再按银行卡号/解密 `accountNoEnc` 口径理解
+- `beforeBalance`：
+  - 按账户变动明细表期初金额取值
+  - 对应账户变动明细字段：
+    - `orgAmt`
+- `afterBalance`：
+  - 按账户变动明细表期末金额取值
+  - 当前文档目标口径对应账户变动明细字段：
+    - `balance`
+
+### 3.5 当前代码现状
 
 - `batchNo`：雪花 ID
 - `currentPage`：`1`
 - `totalPages`：`1`
+- `accountNo`：
+  - 当前组包代码取的是提现子记录里的 `accountNoEnc`，并尝试解密后输出
+  - 与最新字段要求中的 `cardCode` 口径不一致
+- `receiverAccount`：
+  - 当前组包代码取的是提现付款卡 `cardCode`
 - `withdrawType`：
   - `FLWD / BAWD / FIWD` -> `02`
   - 其他提现 -> `01`
@@ -136,10 +174,15 @@ private String finishTime;
   - 成功 -> `00`
   - 失败 -> `01`
 - `amount`：单位元，保留 2 位
-- `beforeBalance / afterBalance`：单位元，保留 2 位
+- `beforeBalance`：
+  - 当前代码取账户变动明细 `orgAmt`
+  - 这与最新字段要求一致
+- `afterBalance`：
+  - 当前代码优先取 `realBalance`，否则回退 `balance`
+  - 与“直接取账户变动明细表期末金额”的最新口径不完全一致
 - `finishTime`：成功时返回
 
-### 3.4 对外实际发送 body
+### 3.6 对外实际发送 body
 
 提现通知消费者对外只发送下面 4 个顶层字段，不发送旧单笔字段：
 
