@@ -30,30 +30,30 @@
 ### consume
 
 - 消费账户更新和批量明细：
-  - `/Users/limeng/workspaces/IdeaProjects_mdl_dep/mdl/fund-catering-consume/fund-catering-consume-service/src/main/java/com/chinaums/erp/slhy/catering/consume/flow/component/trans/consume/consume/ConsumeTransAfter.java`
+  - `../../mdl/fund-catering-consume/fund-catering-consume-service/src/main/java/com/chinaums/erp/slhy/catering/consume/flow/component/trans/consume/consume/ConsumeTransAfter.java`
 - 充值：
-  - `/Users/limeng/workspaces/IdeaProjects_mdl_dep/mdl/fund-catering-consume/fund-catering-consume-service/src/main/java/com/chinaums/erp/slhy/catering/consume/flow/component/trans/recharge/RechargeTransAfter.java`
+  - `../../mdl/fund-catering-consume/fund-catering-consume-service/src/main/java/com/chinaums/erp/slhy/catering/consume/flow/component/trans/recharge/RechargeTransAfter.java`
 - 充值退款：
-  - `/Users/limeng/workspaces/IdeaProjects_mdl_dep/mdl/fund-catering-consume/fund-catering-consume-service/src/main/java/com/chinaums/erp/slhy/catering/consume/flow/component/trans/refundRecharge/RefundRechargeTransAfter.java`
+  - `../../mdl/fund-catering-consume/fund-catering-consume-service/src/main/java/com/chinaums/erp/slhy/catering/consume/flow/component/trans/refundRecharge/RefundRechargeTransAfter.java`
 - 转账：
-  - `/Users/limeng/workspaces/IdeaProjects_mdl_dep/mdl/fund-catering-consume/fund-catering-consume-service/src/main/java/com/chinaums/erp/slhy/catering/consume/flow/component/trans/transfer/api/TransferTransAfter.java`
+  - `../../mdl/fund-catering-consume/fund-catering-consume-service/src/main/java/com/chinaums/erp/slhy/catering/consume/flow/component/trans/transfer/api/TransferTransAfter.java`
 - 消费退款：
-  - `/Users/limeng/workspaces/IdeaProjects_mdl_dep/mdl/fund-catering-consume/fund-catering-consume-service/src/main/java/com/chinaums/erp/slhy/catering/consume/flow/component/trans/consumeRefund/ConsumeTransRefundAfter.java`
-  - `/Users/limeng/workspaces/IdeaProjects_mdl_dep/mdl/fund-catering-consume/fund-catering-consume-service/src/main/java/com/chinaums/erp/slhy/catering/consume/flow/component/trans/consumeRefund/ConsumeTransRefundModel1After.java`
-  - `/Users/limeng/workspaces/IdeaProjects_mdl_dep/mdl/fund-catering-consume/fund-catering-consume-service/src/main/java/com/chinaums/erp/slhy/catering/consume/flow/component/trans/consumeRefund/ConsumeTransRefund04After.java`
+  - `../../mdl/fund-catering-consume/fund-catering-consume-service/src/main/java/com/chinaums/erp/slhy/catering/consume/flow/component/trans/consumeRefund/ConsumeTransRefundAfter.java`
+  - `../../mdl/fund-catering-consume/fund-catering-consume-service/src/main/java/com/chinaums/erp/slhy/catering/consume/flow/component/trans/consumeRefund/ConsumeTransRefundModel1After.java`
+  - `../../mdl/fund-catering-consume/fund-catering-consume-service/src/main/java/com/chinaums/erp/slhy/catering/consume/flow/component/trans/consumeRefund/ConsumeTransRefund04After.java`
 - 提现后处理：
-  - `/Users/limeng/workspaces/IdeaProjects_mdl_dep/mdl/fund-catering-consume/fund-catering-consume-service/src/main/java/com/chinaums/erp/slhy/catering/consume/flow/component/trans/withDraw/WithDrawTransAfter.java`
+  - `../../mdl/fund-catering-consume/fund-catering-consume-service/src/main/java/com/chinaums/erp/slhy/catering/consume/flow/component/trans/withDraw/WithDrawTransAfter.java`
 
 ### task
 
 - 异步上账：
-  - `/Users/limeng/workspaces/IdeaProjects_mdl_dep/mdl/fund-catering-task/src/main/java/com/chinaums/erp/slhy/catering/task/service/impl/AccountEntryAfterService.java`
+  - `../../mdl/fund-catering-task/src/main/java/com/chinaums/erp/slhy/catering/task/service/impl/AccountEntryAfterService.java`
 - 提现完成：
-  - `/Users/limeng/workspaces/IdeaProjects_mdl_dep/mdl/fund-catering-task/src/main/java/com/chinaums/erp/slhy/catering/task/service/impl/zx/ZxWithDrawUpdateStatusAfterService.java`
-  - `/Users/limeng/workspaces/IdeaProjects_mdl_dep/mdl/fund-catering-task/src/main/java/com/chinaums/erp/slhy/catering/task/service/impl/pa/PaWithDrawUpdateStatusAfterService.java`
+  - `../../mdl/fund-catering-task/src/main/java/com/chinaums/erp/slhy/catering/task/service/impl/zx/ZxWithDrawUpdateStatusAfterService.java`
+  - `../../mdl/fund-catering-task/src/main/java/com/chinaums/erp/slhy/catering/task/service/impl/pa/PaWithDrawUpdateStatusAfterService.java`
 - 撤销/回溯：
-  - `/Users/limeng/workspaces/IdeaProjects_mdl_dep/mdl/fund-catering-task/src/main/java/com/chinaums/erp/slhy/catering/task/service/impl/TransferRecallServiceImpl.java`
-  - `/Users/limeng/workspaces/IdeaProjects_mdl_dep/mdl/fund-catering-task/src/main/java/com/chinaums/erp/slhy/catering/task/service/impl/TransRecallServiceImpl.java`
+  - `../../mdl/fund-catering-task/src/main/java/com/chinaums/erp/slhy/catering/task/service/impl/TransferRecallServiceImpl.java`
+  - `../../mdl/fund-catering-task/src/main/java/com/chinaums/erp/slhy/catering/task/service/impl/TransRecallServiceImpl.java`
 
 ## 4. task 模块待重点重构点
 

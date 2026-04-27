@@ -10,10 +10,10 @@
 |------|------|
 | **项目名称** | mdl (麦当劳餐饮资金体系) |
 | **负责人** | 李蒙 (ssssgoldhunter) |
-| **主项目路径** | `/Users/limeng/workspaces/IdeaProjects_mdl_dep/mdl` |
-| **记忆库路径** | `/Users/limeng/workspaces/IdeaProjects_mdl_dep/mdl-memory-hub` |
+| **主项目路径** | `D:\workspaces\IdeaProjects_mdl_dep\mdl` |
+| **记忆库路径** | `D:\workspaces\IdeaProjects_mdl_dep\mdl-memory-hub` |
 | **来源项目** | bwcj + lsym (餐饮资金体系) - 供应链部分相同 |
-| **lsym 项目路径** | `D:\workspaces\IdeaProjects_lsym_uat` (本机) |
+| **lsym 项目路径** | `D:\workspaces\IdeaProjects_lsym_dep\slhy` (本机参考) |
 | **bwcj 项目路径** | 待补充 |
 | **飞书文档** | https://jvn4jogcy6u.feishu.cn |
 
@@ -25,8 +25,12 @@
 |------|------|------|
 | Java | 17 | 开发语言 |
 | Spring Boot | 3.2.4 | 应用框架 |
-| LiteFlow | 最新版 | 流程编排引擎（核心） |
-| MyBatis Plus | 最新版 | ORM 框架 |
+| Spring Cloud | 2023.0.1 | 微服务治理 |
+| Spring Alibaba | 2023.0.1.0 | 云原生特性 |
+| LiteFlow | 2.12.4.1 | 流程编排引擎（核心） |
+| RocketMQ | 5.1.3 | 消息队列 |
+| XXL-Job | 3.1.0 | 分布式任务调度 |
+| MyBatis Plus | 3.5.5 | ORM 框架 |
 | Redis | - | 分布式锁、缓存 |
 | Nacos | - | 配置中心、服务注册发现 |
 
@@ -49,12 +53,12 @@
 
 | 模块 | 文档 | 路径 | 说明 |
 |------|------|------|------|
-| 基础服务 | 基础服务模块 | `modules/MODULE_BASE.md` | 账户/商户/平台对接（399文件） |
-| 前置服务 | 前置服务模块 | `modules/MODULE_FRONT.md` | PA/ZX平台对接（214文件） |
-| 管理服务 | 管理服务模块 | `modules/MODULE_MANAGEMENT.md` | 商户、配置、结算管理（167文件） |
-| 任务调度 | 任务调度模块 | `modules/MODULE_TASK.md` | XXL-Job定时任务（217文件） |
-| 数据批处理 | 数据批处理模块 | `modules/MODULE_DATA_BATCH.md` | 批量数据处理（100+文件） |
-| 报表服务 | 报表模块 | `modules/MODULE_REPORT.md` | 报表生成和查询（50+文件） |
+| 基础服务 | 基础服务模块 | `modules/MODULE_BASE.md` | 账户/商户/平台对接（409文件） |
+| 前置服务 | 前置服务模块 | `modules/MODULE_FRONT.md` | PA/ZX平台对接（229文件） |
+| 管理服务 | 管理服务模块 | `modules/MODULE_MANAGEMENT.md` | 商户、配置、结算管理（255文件） |
+| 任务调度 | 任务调度模块 | `modules/MODULE_TASK.md` | XXL-Job定时任务（88文件） |
+| 数据批处理 | 数据批处理模块 | `modules/MODULE_DATA_BATCH.md` | 批量数据处理（1015文件） |
+| 报表服务 | 报表模块 | `modules/MODULE_REPORT.md` | 报表生成和查询（663文件） |
 | 校验组件 | Check组件 | `modules/CHECK_COMPONENTS.md` | Check组件详解 |
 | API文档 | API接口文档 | `modules/API_REFERENCE.md` | 完整API接口清单 |
 | 数据库 | 数据库表结构 | `modules/DATABASE_SCHEMA.md` | 核心表结构说明 |
@@ -104,7 +108,7 @@ Pack → Check → Trans → After
 
 | 类型 | 路径 |
 |------|------|
-| 消费服务 | `/Users/limeng/workspaces/IdeaProjects_mdl_dep/mdl/fund-catering-consume` |
+| 消费服务 | `D:\workspaces\IdeaProjects_mdl_dep\mdl\fund-catering-consume` |
 | LiteFlow 配置 | `fund-catering-consume-service/src/main/resources/liteflow/` |
 | Trans 组件 | `flow/component/trans/` |
 | Query 组件 | `flow/component/query/` |
@@ -112,6 +116,17 @@ Pack → Check → Trans → After
 ---
 
 ## 📝 工作规范
+
+
+### AI 编码准则（Karpathy / 项目约束）
+
+这些准则用于减少 AI 编码和文档维护时的常见问题，后续 AI 必须遵守：
+
+1. **少假设**：需求、路径、模块状态不确定时先查源码或说明不确定点，不把推测写成事实。
+2. **最小改动**：只修改完成任务必须修改的内容，不做无关重构、格式清理或顺手优化。
+3. **源码优先**：文档结论以当前源码、POM、配置和可扫描结果为准；记忆体内容只是索引和解释。
+4. **可验证**：重要结论需要有命令扫描、文件路径或源码位置支撑；完成前要复查链接、路径、版本和模块统计。
+5. **历史与当前分开**：历史设计、计划和会话日志保留原文；若与当前实现不一致，只在开头追加“历史方案/未落地/当前实现参见...”状态说明。
 
 ### 文档存储规则
 

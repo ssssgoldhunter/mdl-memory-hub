@@ -62,11 +62,11 @@ AI 助手会在以下情况更新记忆体：
 
 ### 保存文档到记忆体
 
-```bash
-cd /Users/limeng/workspaces/IdeaProjects_mdl_dep/mdl-memory-hub
+```powershell
+cd D:\workspaces\IdeaProjects_mdl_dep\mdl-memory-hub
 
-# 编辑或添加文档
-vim docs/NEW_DOCUMENT.md
+# 编辑或添加文档后查看状态
+git status --short
 
 # 提交到 Git
 git add .
@@ -76,39 +76,35 @@ git push
 
 ### 从记忆体获取信息
 
-```bash
-cd /Users/limeng/workspaces/IdeaProjects_mdl_dep/mdl-memory-hub
+```powershell
+cd D:\workspaces\IdeaProjects_mdl_dep\mdl-memory-hub
 
 # 拉取最新内容
 git pull
 
 # 查看文档
-cat docs/TRANSACTION_QUICK_REFERENCE.md
+Get-Content docs/TRANSACTION_QUICK_REFERENCE.md -Encoding UTF8
 ```
 
 ## 📂 记忆体目录结构
 
 ```
 mdl-memory-hub/
-├── docs/                    # 所有设计文档和参考文档
-│   ├── SUPPLY_CHAIN_DESIGN_V5.5.md
-│   ├── TRANSACTION_QUICK_REFERENCE.md
-│   └── MIGRATION_LOG.md
+├── CLAUDE.md                # AI 工作配置
+├── README.md                # 入口说明
 ├── architecture/            # 技术架构文档
-│   ├── FRAMEWORK_BLUEPRINT.md
-│   ├── FRAMEWORK_STRUCTURE.md
-│   └── TRANS_COMPONENT_STRUCTURE.md
+├── bugs/                    # 问题记录与修复备忘
 ├── business-flows/          # 业务流程文档
-│   ├── TRANSACTION_FLOWS.md
-│   └── CONSUME_FLOW_DIAGRAMS.md
+├── conversation-logs/       # 历史会话记录
+├── docs/                    # 所有设计文档和参考文档
+├── modules/                 # 模块说明文档
+├── requirements/            # 需求文档
+├── skills/                  # 项目专项技能说明
 ├── technical-decisions/     # 技术决策记录
-│   └── BATCH_TRANSFER_IMPLEMENTATION.md
-├── project-overview/        # 项目概览信息
-│   └── PROJECT_INFO.md
-├── workflow/               # 工作流程和偏好
-│   └── USER_PREFERENCES.md
-└── knowledge-base/         # 知识库
-    └── (待添加)
+└── workflow/                # 工作流程和偏好
+    ├── DOCUMENT_MANAGEMENT_RULES.md
+    ├── PROJECT_MEMORY.md
+    └── MEMORY_CODE_AUDIT_2026-04-27.md
 ```
 
 ## 🔄 与项目的关系

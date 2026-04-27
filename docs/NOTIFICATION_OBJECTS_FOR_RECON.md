@@ -18,8 +18,8 @@
 - topic：`mq_http_catering_deduction`
 - 对象：`ConsumeNotifyDto`
 - 代码位置：
-  - 对象定义：[ConsumeNotifyDto.java](/Users/limeng/workspaces/IdeaProjects_mdl_dep/mdl/fund-catering-front/fund-catering-front-api/src/main/java/com/chinaums/erp/slhy/catering/front/message/ConsumeNotifyDto.java)
-  - 消费者实现：[HttpDeductionMessageConsumeHandle.java](/Users/limeng/workspaces/IdeaProjects_mdl_dep/mdl/fund-catering-front/fund-catering-front-service/src/main/java/com/chinaums/erp/slhy/catering/front/handle/impl/message/HttpDeductionMessageConsumeHandle.java)
+  - 对象定义：[ConsumeNotifyDto.java](../../mdl/fund-catering-front/fund-catering-front-api/src/main/java/com/chinaums/erp/slhy/catering/front/message/ConsumeNotifyDto.java)
+  - 消费者实现：[HttpDeductionMessageConsumeHandle.java](../../mdl/fund-catering-front/fund-catering-front-service/src/main/java/com/chinaums/erp/slhy/catering/front/handle/impl/message/HttpDeductionMessageConsumeHandle.java)
 
 字段：
 
@@ -55,8 +55,8 @@ private String userBusinessCode;
 - topic：`mq_http_catering_transfer`
 - 对象：`TransferNotifyDto`
 - 代码位置：
-  - 对象定义：[TransferNotifyDto.java](/Users/limeng/workspaces/IdeaProjects_mdl_dep/mdl/fund-catering-front/fund-catering-front-api/src/main/java/com/chinaums/erp/slhy/catering/front/message/TransferNotifyDto.java)
-  - 消费者实现：[HttpTransferMessageConsumeHandle.java](/Users/limeng/workspaces/IdeaProjects_mdl_dep/mdl/fund-catering-front/fund-catering-front-service/src/main/java/com/chinaums/erp/slhy/catering/front/handle/impl/message/HttpTransferMessageConsumeHandle.java)
+  - 对象定义：[TransferNotifyDto.java](../../mdl/fund-catering-front/fund-catering-front-api/src/main/java/com/chinaums/erp/slhy/catering/front/message/TransferNotifyDto.java)
+  - 消费者实现：[HttpTransferMessageConsumeHandle.java](../../mdl/fund-catering-front/fund-catering-front-service/src/main/java/com/chinaums/erp/slhy/catering/front/handle/impl/message/HttpTransferMessageConsumeHandle.java)
 
 字段：
 
@@ -86,10 +86,10 @@ private String userBusinessCode;
 - 顶层对象：`WithDrawNotifyDto`
 - 明细对象：`WithDrawNotifyItemDto`
 - 代码位置：
-  - 顶层对象：[WithDrawNotifyDto.java](/Users/limeng/workspaces/IdeaProjects_mdl_dep/mdl/fund-catering-front/fund-catering-front-api/src/main/java/com/chinaums/erp/slhy/catering/front/message/WithDrawNotifyDto.java)
-  - 明细对象：[WithDrawNotifyItemDto.java](/Users/limeng/workspaces/IdeaProjects_mdl_dep/mdl/fund-catering-front/fund-catering-front-api/src/main/java/com/chinaums/erp/slhy/catering/front/message/WithDrawNotifyItemDto.java)
-  - 组包实现：[WithDrawNotifyBuilder.java](/Users/limeng/workspaces/IdeaProjects_mdl_dep/mdl/fund-catering-task/src/main/java/com/chinaums/erp/slhy/catering/task/service/support/WithDrawNotifyBuilder.java)
-  - 消费者实现：[HttpWithDrawMessageConsumeHandle.java](/Users/limeng/workspaces/IdeaProjects_mdl_dep/mdl/fund-catering-front/fund-catering-front-service/src/main/java/com/chinaums/erp/slhy/catering/front/handle/impl/message/HttpWithDrawMessageConsumeHandle.java)
+  - 顶层对象：[WithDrawNotifyDto.java](../../mdl/fund-catering-front/fund-catering-front-api/src/main/java/com/chinaums/erp/slhy/catering/front/message/WithDrawNotifyDto.java)
+  - 明细对象：[WithDrawNotifyItemDto.java](../../mdl/fund-catering-front/fund-catering-front-api/src/main/java/com/chinaums/erp/slhy/catering/front/message/WithDrawNotifyItemDto.java)
+  - 组包实现：[WithDrawNotifyBuilder.java](../../mdl/fund-catering-task/src/main/java/com/chinaums/erp/slhy/catering/task/service/support/WithDrawNotifyBuilder.java)
+  - 消费者实现：[HttpWithDrawMessageConsumeHandle.java](../../mdl/fund-catering-front/fund-catering-front-service/src/main/java/com/chinaums/erp/slhy/catering/front/handle/impl/message/HttpWithDrawMessageConsumeHandle.java)
 
 ### 3.1 顶层结构
 
@@ -218,9 +218,9 @@ private String finishTime;
 - topic：`mq_http_catering_actual_receipt`
 - 对象：`ActualReceiptNotifyDto`
 - 代码位置：
-  - 对象定义：[ActualReceiptNotifyDto.java](/Users/limeng/workspaces/IdeaProjects_mdl_dep/mdl/fund-catering-front/fund-catering-front-api/src/main/java/com/chinaums/erp/slhy/catering/front/message/ActualReceiptNotifyDto.java)
-  - 消费者实现：[HttpActualReceiptMessageConsumeHandle.java](/Users/limeng/workspaces/IdeaProjects_mdl_dep/mdl/fund-catering-front/fund-catering-front-service/src/main/java/com/chinaums/erp/slhy/catering/front/handle/impl/message/HttpActualReceiptMessageConsumeHandle.java)
-  - 发送入口：[PlatformRechargeJobService.java](/Users/limeng/workspaces/IdeaProjects_mdl_dep/mdl/fund-catering-task/src/main/java/com/chinaums/erp/slhy/catering/task/job/zx/PlatformRechargeJobService.java)
+  - 对象定义：[ActualReceiptNotifyDto.java](../../mdl/fund-catering-front/fund-catering-front-api/src/main/java/com/chinaums/erp/slhy/catering/front/message/ActualReceiptNotifyDto.java)
+  - 消费者实现：[HttpActualReceiptMessageConsumeHandle.java](../../mdl/fund-catering-front/fund-catering-front-service/src/main/java/com/chinaums/erp/slhy/catering/front/handle/impl/message/HttpActualReceiptMessageConsumeHandle.java)
+  - 发送入口：[PlatformRechargeJobService.java](../../mdl/fund-catering-task/src/main/java/com/chinaums/erp/slhy/catering/task/job/zx/PlatformRechargeJobService.java)
 
 字段：
 

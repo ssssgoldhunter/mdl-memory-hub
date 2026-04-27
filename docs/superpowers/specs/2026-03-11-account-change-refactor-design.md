@@ -1,5 +1,7 @@
 # 账户变动模块重构设计方案
 
+> **状态说明（2026-04-27）**：本文是历史设计方案。当前 MDL 源码已转为扩展 `BaseAccountServiceApi` 并由 `AccountChangeBatchService` 支撑，独立 `AccountChangeApi` 未在当前源码中完整落地；正文保留原设计记录。
+
 ## 一、背景
 
 ### 1.1 问题描述

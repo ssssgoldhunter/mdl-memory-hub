@@ -4,8 +4,8 @@
 
 ## 1. 项目定位
 
-- 主代码仓：`/Users/limeng/workspaces/IdeaProjects_mdl_dep/mdl`
-- 记忆/文档仓：`/Users/limeng/workspaces/IdeaProjects_mdl_dep/mdl-memory-hub`
+- 主代码仓：`D:\workspaces\IdeaProjects_mdl_dep\mdl`
+- 记忆/文档仓：`D:\workspaces\IdeaProjects_mdl_dep\mdl-memory-hub`
 - 业务领域：`mdl` 麦当劳餐饮资金体系（从 lsym 迁移，供应链部分相同）
 - 主工作范围：`mdl/fund-catering-*`
 

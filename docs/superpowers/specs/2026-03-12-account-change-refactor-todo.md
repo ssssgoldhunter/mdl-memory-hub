@@ -10,6 +10,7 @@
 > - ❌ 6 张明细/冻结/Entry 表仍在 consume 库，未迁移到 base
 > - ❌ task 模块 `PaWithDrawUpdateStatusAfterService`、`TransferRecallServiceImpl` 仍用 `updateCardSubAccount`
 > - ❌ 无独立 `AccountChangeController`，功能合并于 `BaseAccountFacadeController`
+> - 说明：独立 `AccountChangeApi` 属于历史方案描述；当前实现以扩展 `BaseAccountServiceApi` 为准
 
 ---
 

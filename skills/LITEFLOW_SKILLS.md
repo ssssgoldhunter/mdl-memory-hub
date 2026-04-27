@@ -179,9 +179,9 @@ slot.clear();
 
 | Skill名称 | 源文件位置 |
 |----------|------------|
-| 通用框架 | `/Users/limeng/workspaces/skills/GENERAL_FRAMEWORK_SKILL.md` |
-| LiteFlow主流程 | `/Users/limeng/workspaces/skills/liteflow-skills/MAIN_TASK_SKILL.md` |
-| Pack组件 | `/Users/limeng/workspaces/skills/liteflow-skills/SUB_TASK_SKILL_PACK.md` |
-| Check组件 | `/Users/limeng/workspaces/skills/liteflow-skills/SUB_TASK_SKILL_CHECK.md` |
-| Trans组件 | `/Users/limeng/workspaces/skills/liteflow-skills/SUB_TASK_SKILL_TRANS.md` |
-| After组件 | `/Users/limeng/workspaces/skills/liteflow-skills/SUB_TASK_SKILL_AFTER.md` |
+| 通用框架 | `skills/GENERAL_FRAMEWORK_SKILL.md` |
+| LiteFlow主流程 | `skills/liteflow-skills/MAIN_TASK_SKILL.md` |
+| Pack组件 | `skills/liteflow-skills/SUB_TASK_SKILL_PACK.md` |
+| Check组件 | `skills/liteflow-skills/SUB_TASK_SKILL_CHECK.md` |
+| Trans组件 | `skills/liteflow-skills/SUB_TASK_SKILL_TRANS.md` |
+| After组件 | `skills/liteflow-skills/SUB_TASK_SKILL_AFTER.md` |
