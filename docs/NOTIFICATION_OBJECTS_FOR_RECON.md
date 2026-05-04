@@ -220,7 +220,8 @@ private String finishTime;
 - 代码位置：
   - 对象定义：[ActualReceiptNotifyDto.java](../../mdl/fund-catering-front/fund-catering-front-api/src/main/java/com/chinaums/erp/slhy/catering/front/message/ActualReceiptNotifyDto.java)
   - 消费者实现：[HttpActualReceiptMessageConsumeHandle.java](../../mdl/fund-catering-front/fund-catering-front-service/src/main/java/com/chinaums/erp/slhy/catering/front/handle/impl/message/HttpActualReceiptMessageConsumeHandle.java)
-  - 发送入口：[PlatformRechargeJobService.java](../../mdl/fund-catering-task/src/main/java/com/chinaums/erp/slhy/catering/task/job/zx/PlatformRechargeJobService.java)
+  - 发送入口 1：[PlatformRechargeJobService.java](../../mdl/fund-catering-task/src/main/java/com/chinaums/erp/slhy/catering/task/job/zx/PlatformRechargeJobService.java)
+  - 发送入口 2：[UnknownTransServiceImpl.java](../../mdl/fund-catering-consume/fund-catering-consume-service/src/main/java/com/chinaums/erp/slhy/catering/consume/service/impl/zx/UnknownTransServiceImpl.java)
 
 字段：
 
@@ -246,12 +247,17 @@ private String bankProcessingSerialNo;
 private String bankProcessingCompletionTime;
 private String bankResult;
 private String remark;
+private String transType;
 ```
 
 说明：
 
-- 实收通知当前已经改为基于 `PlatformRechargeJobService`
-- 不再基于“不明来款 / UnknownTrans”链路推送
+- 当前 `master` 中实收通知存在两类发送入口：
+  - `PlatformRechargeJobService`：银行实收 task 扫描成功后发送
+  - `UnknownTransServiceImpl.processBankChannelEntry(...)`：不明来款转实收成功后发送
+- 两条链路最终都投递到 `mq_http_catering_actual_receipt`，由 `front` 的 `HttpActualReceiptMessageConsumeHandle` 统一消费
+- `UnknownTransServiceImpl` 这条链路当前已按 `IC` 口径入账，并在通知中写入 `transType=IC`
+- `PlatformRechargeJobService` 发送的实收通知同样按 `IC` 口径组装 `transType`
 
 ## 5. topic 清单
 
