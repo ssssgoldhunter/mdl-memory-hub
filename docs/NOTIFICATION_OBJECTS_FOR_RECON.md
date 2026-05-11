@@ -258,6 +258,13 @@ private String transType;
 - 两条链路最终都投递到 `mq_http_catering_actual_receipt`，由 `front` 的 `HttpActualReceiptMessageConsumeHandle` 统一消费
 - `UnknownTransServiceImpl` 这条链路当前已按 `IC` 口径入账，并在通知中写入 `transType=IC`
 - `PlatformRechargeJobService` 发送的实收通知同样按 `IC` 口径组装 `transType`
+- 业务口径：不明来款执行“银行渠道上账”成功后，等同实收入金，按实收通知发送。
+
+补充说明：
+
+- 自有资金池阶段 1 的 `03` 是平台/中信侧入金类型口径，当前按普通充值到虚拟账号/内部账号处理，最终走 `rechargeTrans`。
+- `03` 普通充值未显式设置 `IC` 时，`ConsumeRechargeRequest` 默认 `transType=C`，不等同银行实收 `IC` 通知。
+- 银行实收 / 不明来款银行渠道上账才按 `IC` 实收通知口径处理。
 
 ## 5. topic 清单
 

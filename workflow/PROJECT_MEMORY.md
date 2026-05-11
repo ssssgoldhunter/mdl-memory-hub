@@ -170,3 +170,47 @@
 - **E（批量扣款）**：✅ 完成（测试通过） — 独立代码路径、processDeductionDetail02
 - **front 通知**：B/D/银行实收已切 RocketMQ（清结算通知仍 TODO）
 - **待做项**：清结算 API 对接、MAC 校验开启、task 旧路径清理
+
+## 13. 自有资金池与实收入金口径（2026-05-11 更新）
+
+### A. 不明来款 / 银行渠道上账 / 实收入金
+
+- 不明来款执行“银行渠道上账”成功后，按实收入金处理。
+- 银行实收入金充值类型使用 `IC`。
+- 实收通知走 `mq_http_catering_actual_receipt`，对象为 `ActualReceiptNotifyDto`。
+- 当前源码存在两条实收通知发送入口：
+  - `PlatformRechargeJobService`：银行实收 task 扫描成功后发送。
+  - `UnknownTransServiceImpl.processBankChannelEntry(...)`：不明来款转实收成功后发送。
+- 两条链路都按 `transType=IC` 组装实收通知。
+
+### B. 自有资金池阶段 1：03 普通充值到虚拟账号
+
+- `03` 是中信/平台侧入金类型口径，不是新增一套独立交易。
+- 阶段 1 的业务含义：普通充值入金到虚拟账号/内部账号。
+- 源码处理方式：最终走 `TransConsumeApi.rechargeTrans(...)` 普通充值链路。
+- `ConsumeRechargeRequest` 默认 `transType=C`；未显式设置 `IC` 时就是普通充值。
+- 自有资金池虚拟账号配置来自 `SELF_FUND_ACCOUNT_CONFIG`，默认 `registerType=12`。
+- 充值账户仍落到卡的 `04` 子账户。
+
+### C. 自有资金池阶段 2：平台收款 / 平台付款
+
+- 平台付款交易类型：`MC`。
+- 平台收款交易类型：`MR`。
+- Web 入口已存在：
+  - `/scPlatformPay`
+  - `/scPlatformReceive`
+  - `/scPlatformDeduction`（复用平台收款）
+- Consume 入口已存在：
+  - `/consume/trans/transPlatformPay`
+  - `/consume/trans/transPlatformReceive`
+  - `/consume/trans/transPlatformDeduction`（复用平台收款）
+- LiteFlow 链路已存在：
+  - `chainPlatformPay`
+  - `chainPlatformReceive`
+- Front 渠道入口已存在：
+  - `/front/trans/platformPay`
+  - `/front/trans/platformReceive`
+- 中信业务用途：
+  - `2041`：平台付款
+  - `2042`：平台收款
+- Web 入口会读取 `SELF_FUND_ACCOUNT_CONFIG`，将自有资金池卡号/电子账号/dealType/fundTp 传入 consume，再由 consume 调 front 渠道并回写账户变动和交易状态。

@@ -105,6 +105,14 @@
    - 只有提现结果通知继续沿用现有回调链路
 7. 自动化测试与联调
    - 未完成
+8. 自有资金池
+   - 阶段 1：`03` 按普通充值入金到虚拟账号/内部账号处理，最终走 `rechargeTrans`，未显式设置 `IC` 时 `transType=C`
+   - 虚拟账号配置来自 `SELF_FUND_ACCOUNT_CONFIG`，默认 `registerType=12`
+   - 阶段 2：平台付款/收款已提供 `MC/MR`
+   - Web 入口：`/scPlatformPay`、`/scPlatformReceive`、`/scPlatformDeduction`
+   - Consume 入口：`/consume/trans/transPlatformPay`、`/consume/trans/transPlatformReceive`、`/consume/trans/transPlatformDeduction`
+   - Front 入口：`/front/trans/platformPay`、`/front/trans/platformReceive`
+   - 中信业务用途：`2041` 平台付款，`2042` 平台收款
 
 ## 当前开发依据
 
