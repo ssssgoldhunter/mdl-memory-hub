@@ -14,6 +14,8 @@
 | **快速参考** | `mdl-memory-hub/business-flows/` | 业务流程快速参考 |
 | **技术文档** | `mdl-memory-hub/architecture/` | 架构设计文档 |
 | **工作流程** | `mdl-memory-hub/workflow/` | 工作流程和偏好设置 |
+| **主题索引** | `mdl-memory-hub/topics/` | 高频问题域的当前口径和源码入口 |
+| **LLM入口** | `mdl-memory-hub/llms.txt` | AI/Agent 首读导航 |
 
 ### 不放在记忆体的内容
 
@@ -58,6 +60,24 @@ AI 助手会在以下情况更新记忆体：
 - ✅ 更新文档版本
 - ✅ 用户明确要求保存内容
 
+## 🏷️ 文档状态标记
+
+用于帮助 AI 区分当前口径、历史资料和待复核内容。新建或更新重要文档时，建议在标题后或开头补充状态说明。
+
+| 状态 | 含义 | 使用方式 |
+|------|------|----------|
+| `current` | 当前有效口径 | 可作为当前讨论和开发依据，但关键结论仍需按需查源码 |
+| `verified-against-source` | 已对照源码 | 适合主题页、审计报告、源码映射 |
+| `historical` | 历史资料 | 保留追溯价值，不应直接作为当前实现依据 |
+| `needs-source-check` | 待源码复核 | 使用前必须查当前源码、POM 或配置 |
+
+### 主题页维护规则
+
+- 高频、跨目录、会反复被问到的问题放入 `topics/`。
+- 主题页只收敛当前结论、关键源码入口和相关文档链接。
+- 历史过程仍放在 `conversation-logs/`、`requirements/` 或 `docs/` 中。
+- 如果主题页结论和源码不一致，以源码为准，并在主题页顶部标记 `needs-source-check`。
+
 ## 🔧 操作流程
 
 ### 保存文档到记忆体
@@ -91,6 +111,7 @@ Get-Content docs/TRANSACTION_QUICK_REFERENCE.md -Encoding UTF8
 ```
 mdl-memory-hub/
 ├── CLAUDE.md                # AI 工作配置
+├── llms.txt                 # LLM/Agent 入口导航
 ├── README.md                # 入口说明
 ├── architecture/            # 技术架构文档
 ├── bugs/                    # 问题记录与修复备忘
@@ -100,6 +121,7 @@ mdl-memory-hub/
 ├── modules/                 # 模块说明文档
 ├── requirements/            # 需求文档
 ├── skills/                  # 项目专项技能说明
+├── topics/                  # 高频主题入口与当前口径
 ├── technical-decisions/     # 技术决策记录
 └── workflow/                # 工作流程和偏好
     ├── DOCUMENT_MANAGEMENT_RULES.md

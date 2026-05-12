@@ -18,11 +18,20 @@
 
 ## 3. 默认阅读顺序
 
-1. `mdl-memory-hub/docs/TRANSACTION_QUICK_REFERENCE.md`
-2. `mdl-memory-hub/docs/SUPPLY_CHAIN_DESIGN_V5.5.md`
-3. `mdl-memory-hub/architecture/FRAMEWORK_STRUCTURE.md`
-4. `mdl-memory-hub/modules/MODULE_FUND_CATERING.md`
-5. 对应源码目录 `mdl/fund-catering-...`
+1. `mdl-memory-hub/llms.txt`
+2. `mdl-memory-hub/topics/README.md`
+3. `mdl-memory-hub/docs/TRANSACTION_QUICK_REFERENCE.md`
+4. `mdl-memory-hub/docs/SUPPLY_CHAIN_DESIGN_V5.5.md`
+5. `mdl-memory-hub/architecture/FRAMEWORK_STRUCTURE.md`
+6. `mdl-memory-hub/modules/MODULE_FUND_CATERING.md`
+7. 对应源码目录 `mdl/fund-catering-...`
+
+### 3.1 高频主题入口
+
+- 自有资金池垫资：`mdl-memory-hub/topics/self-fund-advance.md`
+- 自有资金池垫资 Consume 接口：`mdl-memory-hub/docs/SELF_FUND_ADVANCE_CONSUME_API.md`
+- 通知与清结算：`mdl-memory-hub/topics/notification-recon.md`
+- 账户变动与 MAC/CAS：`mdl-memory-hub/topics/account-change.md`
 
 ## 4. 核心业务记忆
 
@@ -88,6 +97,7 @@
 - 默认情况下：
   - `md` 文档、分析结论、项目记忆放 `mdl-memory-hub`
   - 源码、配置、资源文件放 `mdl`
+  - 高频主题收敛到 `mdl-memory-hub/topics/`
 
 - 目录命名说明：
   - 仓库目录使用 `mdl/`
@@ -150,7 +160,8 @@
 
 1. 如果发现长期有效的新规则，更新 `workflow/PROJECT_MEMORY.md`
 2. 如果发现源码映射变化，更新 `docs/ACCOUNT_CHANGE_SOURCE_MAP.md`
-3. 如果只是一次性结论，不必污染长期记忆
+3. 如果发现某个问题域会反复出现，更新或新增 `topics/*.md`
+4. 如果只是一次性结论，不必污染长期记忆
 
 ### F. 渠道失败与冻结处理规则
 
@@ -172,6 +183,8 @@
 - **待做项**：清结算 API 对接、MAC 校验开启、task 旧路径清理
 
 ## 13. 自有资金池与实收入金口径（2026-05-11 更新）
+
+> 当前主题入口：`topics/self-fund-advance.md`
 
 ### A. 不明来款 / 银行渠道上账 / 实收入金
 
