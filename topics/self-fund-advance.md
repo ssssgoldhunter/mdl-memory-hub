@@ -32,6 +32,9 @@ This page is the current entry point for 自有资金池垫资.
 
 - 平台付款交易类型：`MC`
 - 平台收款交易类型：`MR`
+- 账户变动明细类型：
+  - `MC` 平台付款：付款方 `MO` 出金，收款方 `MI` 入金
+  - `MR` 平台收款/扣款：付款方 `MC` 出金，收款方 `MR` 入金
 - Web 入口：
   - `/scPlatformPay`
   - `/scPlatformReceive`
