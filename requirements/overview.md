@@ -1,6 +1,6 @@
 # 需求总览
 
-更新时间：2026-04-20 14:35:00 CST
+更新时间：2026-05-12
 
 > 当前实现边界以 `docs/superpowers/mdl-supply-chain-abcd/00-current-baseline.md` 为准。  
 > 旧讨论中的模糊概念、过渡方案、已废弃方案，不再作为当前开发依据。
@@ -109,6 +109,10 @@
    - 阶段 1：`03` 按普通充值入金到虚拟账号/内部账号处理，最终走 `rechargeTrans`，未显式设置 `IC` 时 `transType=C`
    - 虚拟账号配置来自 `SELF_FUND_ACCOUNT_CONFIG`，默认 `registerType=12`
    - 阶段 2：平台付款/收款已提供 `MC/MR`
+   - 清结算垫资调用 `TransConsumeApi.transTransferInner` / `/consume/trans/transTransferInner`，交易类型 `AT`，只做内部账户记账
+   - 垫资扣款调用 `TransConsumeApi.transPlatformReceive` / `/consume/trans/transPlatformReceive`，交易类型 `MR`，平台自有资金收款
+   - 清结算垫资不要调用普通 `/transTransfer`；垫资扣款不要调用普通 `/transDeduction`
+   - 垫资接口金额入参单位是分，整数字符串；`transNo` 由清结算侧传入且必须唯一
    - Web 入口：`/scPlatformPay`、`/scPlatformReceive`、`/scPlatformDeduction`
    - Consume 入口：`/consume/trans/transPlatformPay`、`/consume/trans/transPlatformReceive`、`/consume/trans/transPlatformDeduction`
    - Front 入口：`/front/trans/platformPay`、`/front/trans/platformReceive`

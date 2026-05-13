@@ -140,6 +140,19 @@ TransferTransPack → 业务校验 → TransferTransAuth
 → 解冻资金
 ```
 
+### 自有资金池垫资专项
+
+| 场景 | 调用接口 | 交易类型 | 说明 |
+|------|----------|----------|------|
+| 清结算垫资 | `TransConsumeApi.transTransferInner` / `/consume/trans/transTransferInner` | `AT` | 银行侧资金动作由银行完成，consume 只做付款卡到收款卡的内部账户记账 |
+| 垫资扣款 | `TransConsumeApi.transPlatformReceive` / `/consume/trans/transPlatformReceive` | `MR` | 业务付款卡扣款，平台自有资金账户收款；`transPlatformDeduction` 当前只是复用平台收款 |
+
+关键规则：
+- 金额入参单位是分，整数字符串；自有资金池垫资固定走 `04`。
+- 清结算垫资不要调用普通 `/transTransfer`；垫资扣款不要调用普通 `/transDeduction`。
+- 内部转账同时锁付款卡和收款卡；平台收款只锁付款方卡号。
+- 详细字段看 [自有资金池垫资 Consume 接口](./SELF_FUND_ADVANCE_CONSUME_API.md)。
+
 ---
 
 ## 6️⃣ 消费退款流程

@@ -182,7 +182,7 @@
 - **front 通知**：B/D/银行实收已切 RocketMQ（清结算通知仍 TODO）
 - **待做项**：清结算 API 对接、MAC 校验开启、task 旧路径清理
 
-## 13. 自有资金池与实收入金口径（2026-05-11 更新）
+## 13. 自有资金池与实收入金口径（2026-05-12 更新）
 
 > 当前主题入口：`topics/self-fund-advance.md`
 
@@ -205,7 +205,18 @@
 - 自有资金池虚拟账号配置来自 `SELF_FUND_ACCOUNT_CONFIG`，默认 `registerType=12`。
 - 充值账户仍落到卡的 `04` 子账户。
 
-### C. 自有资金池阶段 2：平台收款 / 平台付款
+### C. 清结算调用 consume 的垫资接口口径
+
+- 清结算垫资调用 `TransConsumeApi.transTransferInner(...)`，接口路径 `/consume/trans/transTransferInner`。
+- 垫资扣款调用 `TransConsumeApi.transPlatformReceive(...)`，接口路径 `/consume/trans/transPlatformReceive`。
+- `transPlatformDeduction(...)` 当前只是复用平台收款；清结算侧建议直接调用 `transPlatformReceive(...)`，语义更清楚。
+- 金额入参 `amount` 使用“分”的整数字符串；自有资金池垫资固定走 `04`。
+- `transNo` 由清结算侧传入且必须唯一。
+- 清结算垫资不要调用普通 `/transTransfer`；垫资扣款不要调用普通 `/transDeduction`。
+- 内部转账同时锁付款卡和收款卡；平台收款只锁付款方卡号。
+- 接口字段和示例以 `docs/SELF_FUND_ADVANCE_CONSUME_API.md` 为准。
+
+### D. 自有资金池阶段 2：平台收款 / 平台付款
 
 - 平台付款交易类型：`MC`。
 - 平台收款交易类型：`MR`。

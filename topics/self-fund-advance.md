@@ -5,6 +5,24 @@
 
 This page is the current entry point for 自有资金池垫资.
 
+## Consume Call Decision
+
+| 业务动作 | 调用接口 | 交易类型 | 资金/记账含义 | 关键边界 |
+|----------|----------|----------|---------------|----------|
+| 清结算垫资 | `TransConsumeApi.transTransferInner` / `/consume/trans/transTransferInner` | `AT` | 银行侧资金动作已完成，consume 只做内部账户记账 | 不调用普通转账 `/transTransfer` |
+| 垫资扣款 | `TransConsumeApi.transPlatformReceive` / `/consume/trans/transPlatformReceive` | `MR` | 业务付款卡扣款，平台自有资金收款 | 不调用普通扣款 `/transDeduction`；`transPlatformDeduction` 只是复用平台收款 |
+| 资金充值 | `TransConsumeApi.rechargeTrans` | `C` 或显式 `IC` | 普通充值入金到虚拟账号/内部账号 | `03` 是平台/中信侧入金类型口径，不是新增交易链 |
+
+## Public Call Rules
+
+- 清结算调用 consume 的正式交接文档：`../docs/SELF_FUND_ADVANCE_CONSUME_API.md`。
+- 公共 Feign：`com.chinaums.erp.slhy.catering.consume.api.TransConsumeApi`。
+- 金额入参 `amount` 使用“分”的整数字符串；响应里的金额/余额常按元字符串返回。
+- 调用方必须保证 `transNo` 唯一；内部转账按重复流水失败，平台收款虽有幂等检查但仍要求唯一流水。
+- 自有资金池垫资相关账户类型固定走 `04`。
+- `payCardCode` 和 `receiveCardCode` 不能相同。
+- 内部转账同时锁付款卡和收款卡；平台收款只锁付款方卡号。
+
 ## Current Business Split
 
 1. 资金充值
@@ -17,16 +35,22 @@ This page is the current entry point for 自有资金池垫资.
 2. 清结算垫资
    - 清结算服务调用 consume Feign 内部转账接口。
    - 银行侧资金动作由银行完成，系统侧同步内部账户记账。
-   - Consume Feign 接口：`/consume/trans/transTransferInner`。
+   - Consume Feign 接口：`transTransferInner(...)` / `/consume/trans/transTransferInner`。
+   - 付款方：垫资资金来源卡 `payCardCode`。
+   - 收款方：业务/平台收款卡 `receiveCardCode`。
    - 入参金额单位：分，整数字符串。
-   - 接口交接文档：`docs/SELF_FUND_ADVANCE_CONSUME_API.md`。
+   - 推荐字段口径：`accountType=04`、`payAccChangeType=AC`、`recAccChangeType=AR`。
+   - 接口交接文档：`../docs/SELF_FUND_ADVANCE_CONSUME_API.md`。
 
 3. 垫资扣款
    - 使用新的平台收款账号完成平台自有资金账户收款。
-   - Consume Feign 接口：`/consume/trans/transPlatformReceive`。
+   - Consume Feign 接口：`transPlatformReceive(...)` / `/consume/trans/transPlatformReceive`。
    - `transPlatformDeduction` 当前复用平台收款。
+   - 付款方：业务付款卡 `payCardCode`。
+   - 收款方：平台收款卡 `receiveCardCode`。
+   - 平台自有资金账户由 `platformCardCode`、`platformBankEAccountId`、`platformDealType`、`platformFundTp` 指定，字段不能为空。
    - 入参金额单位：分，整数字符串。
-   - 接口交接文档：`docs/SELF_FUND_ADVANCE_CONSUME_API.md`。
+   - 接口交接文档：`../docs/SELF_FUND_ADVANCE_CONSUME_API.md`。
 
 ## Platform Receive / Pay Baseline
 
@@ -86,7 +110,7 @@ This page is the current entry point for 自有资金池垫资.
 
 ## Related Docs
 
-- `docs/SELF_FUND_ADVANCE_CONSUME_API.md`
-- `workflow/PROJECT_MEMORY.md`
-- `requirements/overview.md`
-- `docs/NOTIFICATION_OBJECTS_FOR_RECON.md`
+- `../docs/SELF_FUND_ADVANCE_CONSUME_API.md`
+- `../workflow/PROJECT_MEMORY.md`
+- `../requirements/overview.md`
+- `../docs/NOTIFICATION_OBJECTS_FOR_RECON.md`
