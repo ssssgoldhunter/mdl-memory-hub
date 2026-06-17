@@ -1,6 +1,7 @@
 # 03 · fund-catering-front 迁移总结（mdl → lsym）
 
 > 迁移顺序：**第 3 步**（平台对接层，依赖 consume-api）｜ [返回总览](./README.md)
+> **lsym 现状（实测，权威见 [DIFF-ANALYSIS §5](./DIFF-ANALYSIS.md)）**：ADD 13 java/0 xml ｜ 真实 differ 51 ｜ lsym 独有(保留) 2 ｜ 主功能 提现通知/消息类型/开户协议。本文件下方早期统计数字以 DIFF-ANALYSIS 为准。
 
 ## 1. 差异统计
 | 维度 | 数量 |

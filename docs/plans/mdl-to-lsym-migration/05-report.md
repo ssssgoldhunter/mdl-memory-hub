@@ -1,6 +1,7 @@
 # 05 · fund-catering-report 迁移总结（mdl → lsym）
 
 > 迁移顺序：**第 5 步**（报表，依赖 base + consume）｜ [返回总览](./README.md)
+> **lsym 现状（实测，权威见 [DIFF-ANALYSIS §5](./DIFF-ANALYSIS.md)）**：ADD 87 java/12 xml ｜ 真实 differ 134 ｜ lsym 独有(保留) 21 = ReportTrans*/TNegativeHuafuDetail/SettleActualPayDetail/AmountUtils ｜ 主功能 日终明细报表/清分推送/渠道报表/垫支汇总。本文件下方早期统计数字以 DIFF-ANALYSIS 为准。
 
 ## 1. 差异统计
 | 维度 | 数量 |

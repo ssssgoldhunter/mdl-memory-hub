@@ -1,6 +1,7 @@
 # 01 · fund-catering-base 迁移总结（mdl → lsym）
 
 > 迁移顺序：**第 1 步**（账户/领域/接口契约基础，其余模块依赖）｜ [返回总览](./README.md)
+> **lsym 现状（实测，权威见 [DIFF-ANALYSIS §5](./DIFF-ANALYSIS.md)）**：ADD 6 java/0 xml ｜ 真实 differ 43 ｜ lsym 独有(保留) 11 = DepositReg 保证金全套 ｜ 主功能 AlertMessage/自有资金/加密/账户接口。本文件下方早期统计数字以 DIFF-ANALYSIS 为准。
 
 ## 1. 差异统计
 | 维度 | 数量 |

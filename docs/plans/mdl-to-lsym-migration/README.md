@@ -18,19 +18,21 @@
 
 ## 3. 差异统计
 
-### A. mdl 自 2026-04-01 改动（迁移权威范围 = 496 文件）
-| 模块 | 改动文件 |
-|---|---|
-| consume | 136 |
-| report | 110 |
-| management | 83 |
-| web | 79 |
-| front | 35 |
-| base | 30 |
-| task | 23 |
-| **合计** | **496**（432 .java + 55 .xml + 7 .yml + 2 .yaml）|
+### A. mdl 自 2026-04-01 改动（迁移权威范围 = 1233 文件）— 校正自 [DIFF-ANALYSIS §1](./DIFF-ANALYSIS.md)
+> ⚠️ 旧版「496 文件 / 339 提交」口径混乱（既非文件数也非提交数），**已作废**；以本表为准（实测 `git log --since=2026-04-01 --name-only`，未去空格）。
+| 模块 | 改动文件 | java | xml | 其它 |
+|---|---|---|---|---|
+| consume | 562 | 512 | 39 | 11 |
+| report | 389 | 347 | 38 | 4 |
+| management | 84 | 75 | 8 | 1 |
+| web | 83 | 80 | 2 | 1 |
+| base | 41 | 29 | 11 | 1 |
+| front | 39 | 36 | 2 | 1 |
+| task | 35 | 32 | 2 | 1 |
+| **合计** | **1233** | **1111** | **102** | **20** |
 
-> 提交统计：339 次非 merge 提交 / 262 条去重 subject（feat 34 / fix 70 / refactor 11 / chore 2 / 优化调整 222）。
+> 提交规模：**427 次非 merge 提交 / 278 条去重 subject**。分类：feat **43** / fix **86** / refactor **15** / chore **2** / 优化调整 **282**。
+> 注：A 表是 mdl「动过的文件」范围（含纯空格触碰）；真正需迁移的工作量见 §B/C 与 [DIFF-ANALYSIS §1.B](./DIFF-ANALYSIS.md)（去空格后真实 differ 469 + ADD 295 java/26 xml）。
 
 ### B. 当前文件树整体差异（含 4 月前历史分叉，参考）
 | 模块 | mdl 新增 | lsym 独有 | 内容不同 |
@@ -69,10 +71,12 @@
 
 ## 5. mdl 4 月以来新功能清单（16 主题 + 小功能）
 
+> 逐功能 lsym 现状判定（❌纯新增 / 🟠补全 / 🟡核对合并）以 [DIFF-ANALYSIS §3 矩阵](./DIFF-ANALYSIS.md) 为准。下表「状态」为早期粗判，A1/A2 已据 06-17 实测修正为 🟠（lsym 有基础，仅缺新功能）。
+
 | # | 功能主题 | 主要模块 | 状态 |
 |---|---|---|---|
-| 1 | 扣款（冻结/非冻结）批量业务 + 热点账户异步入账 | consume/task | lsym 缺失，整套新增 |
-| 2 | 02 模式划付 / 中信划付 | consume/task/web | lsym 缺失 |
+| 1 | 扣款（冻结/非冻结）批量业务 + 热点账户异步入账 | consume/task | 🟠 补全（lsym 有 91 个 deduction 明细 DTO，缺 transDeduction API+chainDeduction+DeductionBatch）|
+| 2 | 02 模式划付 / 中信划付 | consume/task/web | 🟠 补全（lsym 有 01 基础 TransTransferTiBatch 全套，缺 02/中信 transferTi02/TransferTi02Task）|
 | 3 | 批量冻结 / 解冻 | consume | 随扣款迁移 |
 | 4 | 平台批量实收 + MQ 异步到账通知 | consume/task | lsym 部分（+78 行待合并） |
 | 5 | 通知体系重构（企微替换飞书/结构改造/手动批量重发/去重/中核银行实收通知） | base/consume/front/web | 合并 + 新增 |

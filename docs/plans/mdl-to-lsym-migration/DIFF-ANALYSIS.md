@@ -67,10 +67,10 @@
 | # | 功能 | 关键符号 mdl/lsym | 判定 | lsym 现状 / 缺口 |
 |---|---|---|---|---|
 | 6 | 自有资金**平台付款/收款/扣款** | MC·MR·chainPlatform / 0 | ❌ 纯新增 | lsym 连 MC/MR/chainPlatform 一次引用都没有；`trans/platform/` 5 类 + `SelfFundAccountConfig` 全缺。**最干净**。详见 §4 |
-| 2 | 02 划付/中信划付 | 5 / 0 | ❌?(待验) | transferTi02/processDetail02/TransferTi02Task/TRANSFER_MODE_SWITCH lsym=0。**待确认 lsym 是否有 01 基础转账** |
-| 7 | 月度调账 | 7 / 0 | ❌?(待验) | MonthAdjust/TzMonthBatch lsym=0。**待交叉验证** |
-| 8 | 垫支配置+advance 反写 | 14 / 0 | ❌?(待验) | insertAdvanceSummary/AdvanceSummary lsym=0。**待交叉验证** |
-| 10 | 门店同步与创建 | 5 / 0 | ❌?(待验) | ScStoreSync/StoreSync lsym=0（但 lsym 有门店审核 CheckStoreApp/Contract）。**待交叉验证** |
+| 2 | 02 划付/中信划付 | 8 / 0(02专属) | 🟠 补全 | **已验证(06-17)**：lsym 有 01 基础全套（TransTransferTiBatchBusiness/Detail/Req/QueryRes，consume-api+service）；**缺** 02/中信：transferTi02/processDetail02/TRANSFER_MODE_SWITCH/TransferTi02Task 全 0。在已有 Ti-batch 上补 02 模式 |
+| 7 | 月度调账 | 59 / 0 | ❌ 纯新增 | **已验证(06-17)**：MonthAdjust/MonthBatch/AdjustFee/TzMonth/ZtBatch lsym 全 0（mdl 59）。整套纯新增 |
+| 8 | 垫支配置+advance 反写 | 85 / 0 | ❌ 纯新增 | **已验证(06-17)**：insertAdvanceSummary/AdvanceSummary/SelfFundAccountConfig/GdAccountSummarySettleExc lsym in-scope 全 0（mdl 85）。注：lsym 有相关 AT 内部转账垫资基础（见 §4），advance 反写+配置仍为纯新增 |
+| 10 | 门店同步与创建 | 19 / 0 | ❌ 纯新增 | **已验证(06-17)**：StoreSync/ScStoreSync/门店同步/StoreTripartite/merchant_store_terminal lsym 全 0（mdl 19）。注：lsym 有门店审核 CheckStoreApp/Contract（须保留），同步/创建为纯新增 |
 | 1 | 扣款(B/E 链路) | 34 / 0(专用) | 🟠 补全 | lsym 有 91 个 deduction 明细 DTO，**缺** transDeduction API + chainDeduction + DeductionBatch |
 | 3 | 批量冻结/解冻 | 43 / 20 | 🟠 补全 | lsym 有原 FrozenTrans(需求C)，**缺** batchFreeze/批量冻结 |
 | 9 | 日终明细 | 75 / 0(专用) | 🟠 补全 | lsym 有 18 个余额变更明细/账户变动查询，**缺** 日终处理任务 + 表重设计(reportDate→bizDate) |
@@ -83,7 +83,8 @@
 | 4 | 平台批量实收+MQ通知 | 18 / 18 | 🟡 核对合并 | 两边等量；保 lsym `PlatformRechargeBatch*`（注意这是**独立功能**，非自有资金平台付款） |
 | 16 | 不明来款上账 | 154 / 166 | 🟡 核对合并 | lsym 反而更多；**保 lsym 独有 `ZxUnidentifiedRemittanceRefundJobService`** |
 
-> ⚠️ 打 ❌? 的 4 项（02划付/月度调账/垫支/门店同步）**尚未交叉验证**，存在和扣款/日终一样「有基础、缺新功能」被误判为纯新增的风险。**下一步先验证这 4 项**。
+> ✅ **4 项已交叉验证（2026-06-17，对 lsym=_dep 宽口径 grep 实测）**：A2 升级为 🟠（lsym 有 01 Ti-batch 基础，仅缺 02/中信）；A7/A8/A10 确认 ❌ 纯新增（核心符号 lsym in-scope 全 0）。
+> ⚠️ 方法教训：中文词（如「中信」「垫支」）会冲爆命中数，判定是否存在某功能时**只用代码标识符 token**，不混入中文关键词。
 
 ---
 
@@ -126,8 +127,8 @@
 
 ## 7. 待办
 
-- [ ] 交叉验证 4 个 ❌?（02划付/月度调账/垫支/门店同步），定死 §3 矩阵
-- [ ] 把 §3「lsym 现状」列 + §5 回填进 README 与 01~07
-- [ ] 按 §1 校正 README 的 A 表
-- [ ] commit 到 mdl-memory-hub，同步 `_uat/_dep/_bwcj` 三副本
+- [x] 交叉验证 4 个 ❌?（02划付/月度调账/垫支/门店同步），定死 §3 矩阵 — 结论：A2→🟠 补全（lsym 有 01 基础），A7/A8/A10→❌ 纯新增
+- [x] 把 §3「lsym 现状」列 + §5 回填进 README 与 01~07（README §3.A/§5 + 01~07 各加「lsym 现状」实测行）
+- [x] 按 §1 校正 README 的 A 表（496→1233）
+- [x] commit 到 mdl-memory-hub（本地 commit，未 push）。**注**：`_bwcj` 克隆不存在、文档仓库仅单份，**无需「三副本同步」**；本次实际工作代码克隆 = `_dep`（`/IdeaProjects_lsym_dep/slhy`），与 `_uat` 同远端 `slhy.git`、同 commit `46789bc8bf`，分析结论同等适用
 - [ ] 之后从 base 起，按本基线开迁

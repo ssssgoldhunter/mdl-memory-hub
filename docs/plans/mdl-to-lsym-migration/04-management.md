@@ -1,6 +1,7 @@
 # 04 · fund-catering-management 迁移总结（mdl → lsym）
 
 > 迁移顺序：**第 4 步**（管理后台，依赖 base + consume-api）｜ [返回总览](./README.md)
+> **lsym 现状（实测，权威见 [DIFF-ANALYSIS §5](./DIFF-ANALYSIS.md)）**：ADD 90 java/7 xml ｜ 真实 differ 76 ｜ lsym 独有(保留) 4 = NpkStoreJoinDkPlan/CheckStoreApp/Contract ｜ 主功能 垫支(A8❌)/门店同步(A10❌)/月度调账(A7❌)/麦当劳网关/商户黑名单。本文件下方早期统计数字以 DIFF-ANALYSIS 为准。
 
 ## 1. 差异统计
 | 维度 | 数量 |

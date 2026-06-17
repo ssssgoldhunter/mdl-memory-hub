@@ -1,6 +1,7 @@
 # 07 · fund-catering-web 迁移总结（mdl → lsym）
 
 > 迁移顺序：**第 7 步（最后）**（HTTP 入口，依赖以上全部）｜ [返回总览](./README.md)
+> **lsym 现状（实测，权威见 [DIFF-ANALYSIS §5](./DIFF-ANALYSIS.md)）**：ADD 40 java/0 xml ｜ 真实 differ 43 ｜ lsym 独有(保留) 2 ｜ 主功能 划付/扣款 controller/test 重发/月度调账入口/批量下载凭证。本文件下方早期统计数字以 DIFF-ANALYSIS 为准。
 
 ## 1. 差异统计
 | 维度 | 数量 |

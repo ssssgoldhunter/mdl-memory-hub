@@ -1,6 +1,7 @@
 # 06 · fund-catering-task 迁移总结（mdl → lsym）
 
 > 迁移顺序：**第 6 步**（定时任务，依赖 consume-service）｜ [返回总览](./README.md)
+> **lsym 现状（实测，权威见 [DIFF-ANALYSIS §5](./DIFF-ANALYSIS.md)）**：ADD 5 java/0 xml ｜ 真实 differ 25 ｜ lsym 独有(保留) 5 = AccountSumInfo/AutoWithdrawRemarkDto/FlowTransNoInfo/ZxUnidentifiedRemittanceRefundJobService ｜ 主功能 02划付任务/扣款批量任务/Zx提现通知。本文件下方早期统计数字以 DIFF-ANALYSIS 为准。
 
 ## 1. 差异统计
 | 维度 | 数量 |

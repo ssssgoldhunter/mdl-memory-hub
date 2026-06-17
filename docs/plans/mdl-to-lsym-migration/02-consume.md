@@ -1,6 +1,7 @@
 # 02 · fund-catering-consume 迁移总结（mdl → lsym）
 
 > 迁移顺序：**第 2 步（重头）** — 交易核心：扣款/冻结解冻/平台批量实收/划付/通知/日终明细 ｜ [返回总览](./README.md)
+> **lsym 现状（实测，权威见 [DIFF-ANALYSIS §5](./DIFF-ANALYSIS.md)）**：ADD 54 java/7 xml ｜ 真实 differ 97 ｜ lsym 独有(保留) 0 ｜ 主功能 扣款(A1🟠)/冻结/平台实收(A4🟡)/02划付(A2🟠 有01基础)/日终/自动提现。本文件下方早期统计数字以 DIFF-ANALYSIS 为准。
 
 ## 1. 差异统计
 | 维度 | 数量 |
